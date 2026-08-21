@@ -298,7 +298,7 @@
 
     <!-- TOP VISITOR COUNTER -->
     <div class="visitor-counter-top">
-  YOU ARE THE <span class="counter-display" id="hit-counter">000,000</span> PERSON TO STEP FOOT IN THE BRIGADE HQ! 
+      YOU ARE THE <span class="counter-display" id="hit-counter">000,000</span> PERSON TO STEP FOOT IN THE BRIGADE HQ! 
     </div>
 
     <!-- RATES TABLE -->
@@ -427,7 +427,7 @@
     <div class="space-time-warning">
       ⚠️ FOR THOSE WHO WANT TO VIOLATE OUR RULES ⚠️<br>
       Scams, fraudulent chargebacks, payment fraud, or deliberate attempts to bypass the Brigade's rules will result in immediate cancellation and a blacklist from future commissions.<br><br>
-      <em>Yuki has been notified. Please do not test the space-time continuum. 🔥⚡</em>
+      <em>Yuki has been notified. Please do not test the space-time continuum. </em>
     </div>
 
     <!-- FOOTER MESSAGE -->
@@ -439,15 +439,15 @@
 
   </div>
 
-  <!-- SCRIPT TO INCREMENT COUNTER ON PAGE REFRESH -->
+  <!-- SCRIPT TO RESET STORAGE AND START FRESH FROM 0 -->
   <script>
-    let visits = localStorage.getItem('sos_brigade_hits') || 5492;
+    // Force key name change to 'sos_brigade_v2' to bypass old local memory completely
+    let visits = localStorage.getItem('sos_brigade_v2') || 0;
     visits = parseInt(visits) + 1;
-    localStorage.setItem('sos_brigade_hits', visits);
+    localStorage.setItem('sos_brigade_v2', visits);
     
     const formattedCounter = String(visits).padStart(6, '0');
     document.getElementById('hit-counter').textContent = formattedCounter;
   </script>
-
 </body>
 </html>
