@@ -22,6 +22,90 @@
       display: flex;
       justify-content: center;
       transition: background 0.2s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CONFETTI CANVAS */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 99999;
+    }
+
+    /* RETRO CONFETTI BUTTON AT THE TOP */
+    .confetti-btn-container {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .confetti-btn {
+      background: #ff0055;
+      color: #ffffff;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 0.95rem;
+      padding: 10px 18px;
+      border: 3px solid #000000;
+      box-shadow: 4px 4px 0px #ffff00;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .confetti-btn:hover {
+      background: #ff3377;
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #ffff00;
+    }
+
+    .confetti-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #ffff00;
+    }
+
+    /* NON-STACKABLE THANK YOU POPUP BOX */
+    .thank-you-box {
+      display: none;
+      background-color: #ffff00;
+      color: #000000;
+      border: 3px solid #000000;
+      box-shadow: 5px 5px 0px #ff0055;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      position: relative;
+      animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .thank-you-box .close-btn {
+      position: absolute;
+      top: 4px;
+      right: 8px;
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 0.8rem;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .thank-you-box .close-btn:hover {
+      background: #ff0055;
     }
 
     /* YUKI DATA OVERWRITE STYLES */
@@ -46,7 +130,9 @@
     body.yuki-overwrite-mode .visitor-counter-top,
     body.yuki-overwrite-mode .space-time-warning,
     body.yuki-overwrite-mode .footer-msg,
-    body.yuki-overwrite-mode .contact-links {
+    body.yuki-overwrite-mode .contact-links,
+    body.yuki-overwrite-mode .confetti-btn,
+    body.yuki-overwrite-mode .thank-you-box {
       background-color: #000000 !important;
       color: #00ff00 !important;
       border-color: #00ff00 !important;
@@ -199,7 +285,7 @@
       pointer-events: none;
     }
 
-    /* KYON BASE ANIMATION (5 deg sway at 2fps) */
+    /* KYON BASE ANIMATION */
     .kyon-base {
       position: absolute;
       top: 0;
@@ -217,7 +303,7 @@
       50% { transform: rotate(5deg); }
     }
 
-    /* KYON TIRED EFFECT (Flickering overlay synced with sway) */
+    /* KYON TIRED EFFECT */
     .kyon-tired {
       position: absolute;
       top: 0;
@@ -234,7 +320,7 @@
       100% { opacity: 0.95; }
     }
 
-    /* SWIRL EFFECTS (Left side & Right side mirrored) */
+    /* SWIRL EFFECTS */
     .kyon-swirl {
       position: absolute;
       width: 70px;
@@ -527,7 +613,24 @@
 </head>
 <body>
 
+  <!-- CONFETTI OVERLAY CANVAS -->
+  <canvas id="confetti-canvas"></canvas>
+
   <div class="board-container">
+    
+    <!-- RETRO CONFETTI CELEBRATION BUTTON -->
+    <div class="confetti-btn-container">
+      <button class="confetti-btn" onclick="triggerConfettiCelebration()">
+        🎉 [USELESS BUTTON] 🎉
+      </button>
+    </div>
+
+    <!-- NON-STACKABLE INTERACTIVE THANK YOU BOX -->
+    <div class="thank-you-box" id="thank-you-popup">
+      <button class="close-btn" onclick="closeThankYouBox()">[X]</button>
+      ★ THANK YOU FOR VISITING THE S.O.S. BRIGADE HQ! YOUR SUPPORT IS APPRECIATED! ★
+    </div>
+
     <div class="vibe-tag">★ PUBLIC EDITION ★ NO SPAMMERS ★</div>
     
     <!-- HEADER WITH TOP-RIGHT HARUHI OVERLAY -->
@@ -721,13 +824,13 @@
   <!-- YUKI DATA OVERWRITE TERMINAL POPUP -->
   <div id="yuki-terminal">
     <div class="terminal-content">
-      <p class="yuki-msg">YUKI.N&gt; Can you see this?</p>
+      <p class="yuki-msg">&lt;N.YUKI&gt; can you see this message?</p>
       <p class="yuki-sub">&gt; DATA_OVERWRITE_SEQUENCE_COMPLETE.</p>
       <p class="yuki-hint">[ Click anywhere to restore space-time continuum ]</p>
     </div>
   </div>
 
-  <!-- SCRIPT FOR COUNTER AND YUKI OVERWRITE -->
+  <!-- SCRIPT FOR COUNTER, CONFETTI & YUKI OVERWRITE -->
   <script>
     /* VISITOR COUNTER */
     let visits = localStorage.getItem('sos_brigade_v2') || 2980;
@@ -742,7 +845,6 @@
     const yukiTerminal = document.getElementById('yuki-terminal');
     let isOverwritten = false;
 
-    // Convert plain text into binary string
     function textToBinary(text) {
       return text.split('').map(char => {
         if (char === ' ' || char === '\n') return char;
@@ -750,7 +852,6 @@
       }).join(' ');
     }
 
-    // Collect all text nodes on the board
     const textNodesToBinary = [];
     function collectTextNodes(element) {
       for (let node of element.childNodes) {
@@ -764,7 +865,6 @@
     
     collectTextNodes(document.querySelector('.board-container'));
 
-    // Toggle function on click
     function toggleYukiOverwrite(e) {
       e.stopPropagation();
       if (!isOverwritten) {
@@ -786,9 +886,89 @@
       }
     }
 
-    // Click Nagato directly to activate / Click terminal overlay to restore
     yukiTrigger.addEventListener('click', toggleYukiOverwrite);
     yukiTerminal.addEventListener('click', toggleYukiOverwrite);
+
+    /* CONFETTI SYSTEM & STACKABLE AUDIO TRIGGER */
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let confettiParticles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class ConfettiParticle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20 - Math.random() * 50;
+        this.size = Math.random() * 8 + 6;
+        this.color = ['#ff0055', '#ffff00', '#00ccff', '#00ff00', '#ff9900', '#ffffff'][Math.floor(Math.random() * 6)];
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 10;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    let animationFrame;
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiParticles.forEach((particle, index) => {
+        particle.update();
+        particle.draw();
+        if (particle.y > canvas.height + 20) {
+          confettiParticles.splice(index, 1);
+        }
+      });
+
+      if (confettiParticles.length > 0) {
+        animationFrame = requestAnimationFrame(animateConfetti);
+      }
+    }
+
+    function closeThankYouBox() {
+      document.getElementById('thank-you-popup').style.display = 'none';
+    }
+
+    function triggerConfettiCelebration() {
+      // 1. Play Sound Effect (STACKS INTENTIONALLY)
+      const sound = new Audio('confetti.mp3');
+      sound.play().catch(e => console.log('Audio autoplay prevented:', e));
+
+      // 2. Spawn Confetti Rain (Top to Bottom)
+      for (let i = 0; i < 120; i++) {
+        confettiParticles.push(new ConfettiParticle());
+      }
+
+      cancelAnimationFrame(animationFrame);
+      animateConfetti();
+
+      // 3. Show Non-Stackable Thank You Box
+      const thankYouBox = document.getElementById('thank-you-popup');
+      thankYouBox.style.display = 'block';
+      thankYouBox.style.animation = 'none';
+      thankYouBox.offsetHeight; // Trigger reflow
+      thankYouBox.style.animation = 'popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    }
   </script>
 </body>
 </html>
