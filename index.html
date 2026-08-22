@@ -21,6 +21,40 @@
       padding: 20px;
       display: flex;
       justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    /* YUKI DATA OVERWRITE STYLES */
+    body.yuki-overwrite-mode {
+      background-color: #000000 !important;
+      background-image: none !important;
+      filter: grayscale(100%) contrast(150%) !important;
+    }
+
+    body.yuki-overwrite-mode .board-container {
+      background-color: #050505 !important;
+      border-color: #00ff00 !important;
+      box-shadow: 0px 0px 15px #00ff00 !important;
+      color: #00ff00 !important;
+      font-family: 'Courier New', monospace !important;
+    }
+
+    body.yuki-overwrite-mode table, 
+    body.yuki-overwrite-mode .info-box, 
+    body.yuki-overwrite-mode .header-banner,
+    body.yuki-overwrite-mode .blacklist-box,
+    body.yuki-overwrite-mode .visitor-counter-top,
+    body.yuki-overwrite-mode .space-time-warning,
+    body.yuki-overwrite-mode .footer-msg {
+      background-color: #000000 !important;
+      color: #00ff00 !important;
+      border-color: #00ff00 !important;
+      box-shadow: none !important;
+    }
+
+    body.yuki-overwrite-mode th {
+      background-color: #003300 !important;
+      color: #00ff00 !important;
     }
 
     .board-container {
@@ -143,6 +177,88 @@
       box-shadow: 3px 3px 0px #000;
     }
 
+    /* RATES SECTION WRAPPER FOR KYON OVERLAY */
+    .rates-section-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    /* KYON FAR OUTSIDE LOWER RIGHT OVERLAY CONTAINER */
+    .kyon-overlay-container {
+      position: absolute;
+      bottom: -130px;
+      right: -50px;
+      width: 170px;
+      height: 170px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* KYON BASE ANIMATION (5 deg sway at 2fps) */
+    .kyon-base {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 2;
+      transform-origin: bottom center;
+      animation: kyon-sway 1s steps(1) infinite;
+      filter: drop-shadow(3px 3px 0px #ff0055);
+    }
+
+    @keyframes kyon-sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    /* KYON TIRED EFFECT (Flickering overlay synced with sway) */
+    .kyon-tired {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 3;
+      transform-origin: bottom center;
+      animation: kyon-sway 1s steps(1) infinite, kyon-tired-flicker 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes kyon-tired-flicker {
+      0% { opacity: 0.2; }
+      100% { opacity: 0.95; }
+    }
+
+    /* SWIRL EFFECTS (Left side & Right side mirrored) */
+    .kyon-swirl {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      z-index: 1;
+    }
+
+    .swirl-left {
+      top: 5px;
+      left: -25px;
+      animation: swirl-spin-left 1.8s linear infinite;
+    }
+
+    .swirl-right {
+      top: 5px;
+      right: -25px;
+      animation: swirl-spin-right 1.8s linear infinite;
+    }
+
+    @keyframes swirl-spin-left {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes swirl-spin-right {
+      from { transform: scaleX(-1) rotate(0deg); }
+      to { transform: scaleX(-1) rotate(-360deg); }
+    }
+
     /* TOS SECTION WRAPPER FOR MEGAPHONE OVERLAY */
     .tos-section-wrapper {
       position: relative;
@@ -152,7 +268,7 @@
     /* HARUHI MEGAPHONE BONK DUAL OVERLAY */
     .bonk-overlay-container {
       position: absolute;
-      top: -45px;
+      top: 40px;
       right: -10px;
       width: 170px;
       height: 170px;
@@ -193,7 +309,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 0;
       background: #fff;
       border: 2px solid #000;
     }
@@ -236,16 +352,70 @@
       text-transform: uppercase;
     }
 
+    /* SPACE TIME WARNING + YUKI UFO OVERLAY */
     .space-time-warning {
+      position: relative;
       background-color: #e6ffe6;
       border: 2px solid #00aa00;
       color: #006600;
-      padding: 15px;
+      padding: 20px;
+      padding-left: 110px;
       margin-top: 25px;
       font-weight: bold;
       font-size: 0.85rem;
       text-align: center;
       box-shadow: 4px 4px 0px #00aa00;
+    }
+
+    .yuki-ufo-container {
+      position: absolute;
+      bottom: -15px;
+      left: -20px;
+      width: 130px;
+      height: 130px;
+      z-index: 10;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .yuki-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(3px 3px 0px #00aa00);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .yuki-layer-bottom {
+      z-index: 1;
+      animation: yuki-swap-bottom 0.6s steps(1) infinite;
+    }
+
+    .yuki-layer-top {
+      z-index: 2;
+      animation: yuki-swap-top 0.6s steps(1) infinite;
+    }
+
+    @keyframes yuki-swap-bottom {
+      0%, 100% { opacity: 1; transform: translateY(0px); }
+      50% { opacity: 0; transform: translateY(-4px); }
+    }
+
+    @keyframes yuki-swap-top {
+      0%, 100% { opacity: 0; transform: translateY(-4px); }
+      50% { opacity: 1; transform: translateY(0px); }
+    }
+
+    .yuki-ufo-container:hover {
+      animation: ufo-hover-move 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes ufo-hover-move {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(-3deg); }
+      100% { transform: translateY(-3px) rotate(4deg); }
     }
 
     .vibe-tag {
@@ -277,6 +447,60 @@
       font-weight: bold;
       text-align: center;
     }
+
+    /* TERMINAL POPUP OVERLAY */
+    #yuki-terminal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    #yuki-terminal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .terminal-content {
+      border: 2px solid #00ff00;
+      padding: 30px;
+      background: #000;
+      box-shadow: 0 0 20px #00ff00;
+      text-align: center;
+      max-width: 500px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .yuki-msg {
+      color: #00ff00;
+      font-size: 1.3rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #00ff00;
+    }
+
+    .yuki-sub {
+      color: #00aa00;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .yuki-hint {
+      color: #888888;
+      font-size: 0.75rem;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -301,34 +525,49 @@
       YOU ARE THE <span class="counter-display" id="hit-counter">000,000</span> PERSON TO STEP FOOT IN THE BRIGADE HQ! 
     </div>
 
-    <!-- RATES TABLE -->
-    <div class="section-title">💥 Official Brigade Rates & Upgrades</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Tier / Type</th>
-          <th>Base Price</th>
-          <th>Add-ons & Upgrades</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Simple Chibi</td>
-          <td>$15</td>
-          <td>• Tiny ornaments / props: +$2<br>• Detailed background: +$10</td>
-        </tr>
-        <tr>
-          <td>Half Body</td>
-          <td>$60</td>
-          <td>• Complex weapons / props / moderate gore: +$5<br>• Atmospheric background: +$15</td>
-        </tr>
-        <tr>
-          <td>Full Body</td>
-          <td>█ ENCRYPTED █</td>
-          <td>«OUT OF STOCK FOREVER.»<br>Kyon refused to do the paperwork for this, and drawing shoes is a classified hazard.</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- RATES SECTION WRAPPER WITH KYON OVERLAY -->
+    <div class="rates-section-wrapper">
+      <div class="section-title">💥 Official Brigade Rates & Upgrades</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Tier / Type</th>
+            <th>Base Price</th>
+            <th>Add-ons & Upgrades</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Simple Chibi</td>
+            <td>$15</td>
+            <td>• Tiny ornaments / props: +$2<br>• Detailed background: +$10</td>
+          </tr>
+          <tr>
+            <td>Half Body</td>
+            <td>$60</td>
+            <td>• Complex weapons / props / moderate gore: +$5<br>• Atmospheric background: +$15</td>
+          </tr>
+          <tr>
+            <td>Full Body</td>
+            <td>█ ENCRYPTED █</td>
+            <td>«OUT OF STOCK FOREVER.»<br>Kyon refused to do the paperwork for this, and drawing shoes is a classified hazard.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- KYON MULTI-LAYER ANIMATED OVERLAY (FAR OUTSIDE LOWER RIGHT) -->
+      <div class="kyon-overlay-container">
+        <!-- SWIRLS (Left & Right Mirrored) -->
+        <img src="kyon 3.png" alt="Swirl Left" class="kyon-swirl swirl-left">
+        <img src="kyon 3.png" alt="Swirl Right" class="kyon-swirl swirl-right">
+
+        <!-- KYON BASE -->
+        <img src="kyon.png" alt="Kyon" class="kyon-base">
+
+        <!-- KYON TIRED EFFECT -->
+        <img src="kyon 2.png" alt="Kyon Tired Effect" class="kyon-tired">
+      </div>
+    </div>
 
     <!-- PAYMENT METHODS -->
     <div class="section-title">💳 Brigade Funding — Payment</div>
@@ -423,8 +662,14 @@
       <p style="margin-top: 10px; font-weight: bold; color: #ff0055;">Just be respectful and we'll get along perfectly. FAFO rules apply. 👍</p>
     </div>
 
-    <!-- SPACE TIME WARNING -->
+    <!-- SPACE TIME WARNING WITH YUKI UFO OVERLAY -->
     <div class="space-time-warning">
+      <!-- YUKI UFO DUAL LAYER OVERLAY (CLICK TARGET) -->
+      <div class="yuki-ufo-container" id="yuki-trigger">
+        <img src="yuki 2.png" alt="Yuki Layer 2" class="yuki-layer yuki-layer-bottom">
+        <img src="yuki.png" alt="Yuki Layer 1" class="yuki-layer yuki-layer-top">
+      </div>
+
       ⚠️ FOR THOSE WHO WANT TO VIOLATE OUR RULES ⚠️<br>
       Scams, fraudulent chargebacks, payment fraud, or deliberate attempts to bypass the Brigade's rules will result in immediate cancellation and a blacklist from future commissions.<br><br>
       <em>Yuki has been notified. Please do not test the space-time continuum. </em>
@@ -439,15 +684,77 @@
 
   </div>
 
-  <!-- SCRIPT TO RESET STORAGE AND START FRESH FROM 0 -->
+  <!-- YUKI DATA OVERWRITE TERMINAL POPUP -->
+  <div id="yuki-terminal">
+    <div class="terminal-content">
+      <p class="yuki-msg">&lt;N.YUKI&gt; can you see this message?</p>
+      <p class="yuki-sub">&gt; DATA_OVERWRITE_SEQUENCE_COMPLETE.</p>
+      <p class="yuki-hint">[ Click anywhere to restore space-time continuum ]</p>
+    </div>
+  </div>
+
+  <!-- SCRIPT FOR COUNTER AND YUKI OVERWRITE -->
   <script>
-    // Force key name change to 'sos_brigade_v2' to bypass old local memory completely
-    let visits = localStorage.getItem('sos_brigade_v2') || 0;
+    /* VISITOR COUNTER */
+    let visits = localStorage.getItem('sos_brigade_v2') || 2980;
     visits = parseInt(visits) + 1;
     localStorage.setItem('sos_brigade_v2', visits);
     
     const formattedCounter = String(visits).padStart(6, '0');
     document.getElementById('hit-counter').textContent = formattedCounter;
+
+    /* YUKI DATA OVERWRITE CLICK TRIGGER */
+    const yukiTrigger = document.getElementById('yuki-trigger');
+    const yukiTerminal = document.getElementById('yuki-terminal');
+    let isOverwritten = false;
+
+    // Convert plain text into binary string
+    function textToBinary(text) {
+      return text.split('').map(char => {
+        if (char === ' ' || char === '\n') return char;
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+      }).join(' ');
+    }
+
+    // Collect all text nodes on the board
+    const textNodesToBinary = [];
+    function collectTextNodes(element) {
+      for (let node of element.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+          textNodesToBinary.push({ node: node, original: node.nodeValue });
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.id !== 'yuki-terminal') {
+          collectTextNodes(node);
+        }
+      }
+    }
+    
+    collectTextNodes(document.querySelector('.board-container'));
+
+    // Toggle function on click
+    function toggleYukiOverwrite(e) {
+      e.stopPropagation();
+      if (!isOverwritten) {
+        isOverwritten = true;
+        document.body.classList.add('yuki-overwrite-mode');
+        yukiTerminal.classList.add('active');
+
+        textNodesToBinary.forEach(item => {
+          item.node.nodeValue = textToBinary(item.original);
+        });
+      } else {
+        isOverwritten = false;
+        document.body.classList.remove('yuki-overwrite-mode');
+        yukiTerminal.classList.remove('active');
+
+        textNodesToBinary.forEach(item => {
+          item.node.nodeValue = item.original;
+        });
+      }
+    }
+
+    // Click Nagato directly to activate / Click terminal overlay to restore
+    yukiTrigger.addEventListener('click', toggleYukiOverwrite);
+    yukiTerminal.addEventListener('click', toggleYukiOverwrite);
   </script>
 </body>
 </html>
