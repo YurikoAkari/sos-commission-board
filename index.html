@@ -45,11 +45,16 @@
     body.yuki-overwrite-mode .blacklist-box,
     body.yuki-overwrite-mode .visitor-counter-top,
     body.yuki-overwrite-mode .space-time-warning,
-    body.yuki-overwrite-mode .footer-msg {
+    body.yuki-overwrite-mode .footer-msg,
+    body.yuki-overwrite-mode .contact-links {
       background-color: #000000 !important;
       color: #00ff00 !important;
       border-color: #00ff00 !important;
       box-shadow: none !important;
+    }
+
+    body.yuki-overwrite-mode .contact-links a {
+      color: #00ff00 !important;
     }
 
     body.yuki-overwrite-mode th {
@@ -448,6 +453,23 @@
       text-align: center;
     }
 
+    .contact-links {
+      margin: 15px 0;
+      padding: 12px;
+      background: #ffffff;
+      border: 2px solid #000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .contact-links a {
+      color: #000000;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
     /* TERMINAL POPUP OVERLAY */
     #yuki-terminal {
       position: fixed;
@@ -675,10 +697,22 @@
       <em>Yuki has been notified. Please do not test the space-time continuum. </em>
     </div>
 
-    <!-- FOOTER MESSAGE -->
+    <!-- FOOTER MESSAGE & CONTACT -->
     <div class="footer-msg">
       If all of that sounds good to you, send me your character reference and what you'd like drawn! ✨<br>
       We'll confirm the details and payment first, and once everything is settled, I'll start working on your piece.<br><br>
+
+      <!-- DIRECT CONTACT BUTTONS / LINKS -->
+      <div class="contact-links">
+        <p style="margin-bottom: 4px; font-weight: bold; color: #ff0055;">📬 READY TO COMMISSION? REACH OUT HERE:</p>
+        <a href="https://x.com/iburntmytoas_t" target="_blank">
+          [ 🐦 Twitter / X: @iburntmytoas_t ]
+        </a>
+        <a href="mailto:meliketoast639@gmail.com">
+          [ ✉️ Gmail: meliketoast639@gmail.com ]
+        </a>
+      </div>
+
       <strong>Welcome to the S.O.S. Brigade! Try not to break anything! 🛸</strong>
     </div>
 
@@ -687,7 +721,7 @@
   <!-- YUKI DATA OVERWRITE TERMINAL POPUP -->
   <div id="yuki-terminal">
     <div class="terminal-content">
-      <p class="yuki-msg">&lt;N.YUKI&gt; can you see this message?</p>
+      <p class="yuki-msg">YUKI.N&gt; Can you see this?</p>
       <p class="yuki-sub">&gt; DATA_OVERWRITE_SEQUENCE_COMPLETE.</p>
       <p class="yuki-hint">[ Click anywhere to restore space-time continuum ]</p>
     </div>
