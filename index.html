@@ -69,6 +69,79 @@
       box-shadow: 2px 2px 0px #ffff00;
     }
 
+    /* VGEN FLOATING SIDE BANNER (WITH SLIDE-IN & PULSE ANIMATION) */
+    .vgen-side-banner {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      z-index: 999;
+      background: #ffff00;
+      border: 3px solid #000000;
+      box-shadow: 5px 5px 0px #ff0055;
+      padding: 12px 14px;
+      max-width: 210px;
+      text-align: center;
+      
+      /* Combine Slide In Entrance + Pulsing Loop */
+      animation: vgenSlideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                 vgenPulse 1.5s 0.8s infinite alternate ease-in-out;
+    }
+
+    @keyframes vgenSlideIn {
+      0% {
+        transform: translateX(250px) rotate(10deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0) rotate(-1deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes vgenPulse {
+      0% { transform: scale(1) rotate(-1deg); }
+      100% { transform: scale(1.04) rotate(1deg); }
+    }
+
+    .vgen-banner-tag {
+      background: #ff0055;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      display: inline-block;
+      margin-bottom: 6px;
+      border: 1px solid #000;
+      text-transform: uppercase;
+    }
+
+    .vgen-banner-title {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #000000;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .vgen-banner-btn {
+      display: block;
+      background: #00ccff;
+      color: #000000;
+      font-weight: bold;
+      font-size: 0.8rem;
+      padding: 6px 8px;
+      border: 2px solid #000000;
+      text-decoration: none;
+      box-shadow: 2px 2px 0px #000;
+      transition: all 0.1s ease;
+    }
+
+    .vgen-banner-btn:hover {
+      background: #00ff00;
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px #000;
+    }
+
     /* NON-STACKABLE THANK YOU POPUP BOX */
     .thank-you-box {
       display: none;
@@ -132,15 +205,19 @@
     body.yuki-overwrite-mode .footer-msg,
     body.yuki-overwrite-mode .contact-links,
     body.yuki-overwrite-mode .confetti-btn,
-    body.yuki-overwrite-mode .thank-you-box {
+    body.yuki-overwrite-mode .thank-you-box,
+    body.yuki-overwrite-mode .vgen-side-banner {
       background-color: #000000 !important;
       color: #00ff00 !important;
       border-color: #00ff00 !important;
       box-shadow: none !important;
     }
 
-    body.yuki-overwrite-mode .contact-links a {
+    body.yuki-overwrite-mode .contact-links a,
+    body.yuki-overwrite-mode .vgen-banner-btn {
       color: #00ff00 !important;
+      border-color: #00ff00 !important;
+      background: #000000 !important;
     }
 
     body.yuki-overwrite-mode th {
@@ -609,12 +686,32 @@
       font-size: 0.75rem;
       font-style: italic;
     }
+
+    /* RESPONSIVE DESIGN ADJUSTMENT FOR SMALL SCREENS */
+    @media (max-width: 1024px) {
+      .vgen-side-banner {
+        position: relative;
+        top: 0;
+        right: 0;
+        max-width: 100%;
+        margin-bottom: 15px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- CONFETTI OVERLAY CANVAS -->
   <canvas id="confetti-canvas"></canvas>
+
+  <!-- VGEN FLOATING SIDE BANNER -->
+  <div class="vgen-side-banner">
+    <div class="vgen-banner-tag">📢 NEW HQ NOTICE!</div>
+    <div class="vgen-banner-title">VGEN ARTIST+ HAS BEEN AUTHORIZED<br>PLEASE VISIT!</div>
+    <a href="https://vgen.co/iburntmytoast" target="_blank" class="vgen-banner-btn">
+       VISIT VGEN SHOP 
+    </a>
+  </div>
 
   <div class="board-container">
     
@@ -669,7 +766,7 @@
           </tr>
           <tr>
             <td>Half Body</td>
-            <td>$50</td>
+            <td>$60</td>
             <td>• Complex weapons / props / moderate gore: +$5<br>• Atmospheric background: +$15</td>
           </tr>
           <tr>
@@ -830,8 +927,24 @@
     </div>
   </div>
 
-  <!-- SCRIPT FOR COUNTER, CONFETTI & YUKI OVERWRITE -->
+  <!-- SCRIPT FOR COUNTER, SOUND, CONFETTI & YUKI OVERWRITE -->
   <script>
+    /* PLAY STEAM.MP3 UPON OPENING WEBSITE */
+    window.addEventListener('DOMContentLoaded', () => {
+      const steamSound = new Audio('steam.mp3');
+      
+      // Attempt autoplay on page load
+      steamSound.play().catch(error => {
+        console.log('Browser blocked autoplay. Will play on first user interaction.');
+        // Fallback: Play on first interaction if blocked by browser policy
+        const playOnFirstClick = () => {
+          steamSound.play();
+          document.removeEventListener('click', playOnFirstClick);
+        };
+        document.addEventListener('click', playOnFirstClick);
+      });
+    });
+
     /* VISITOR COUNTER */
     let visits = localStorage.getItem('sos_brigade_v2') || 2980;
     visits = parseInt(visits) + 1;
