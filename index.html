@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>★~ SOS BRIGADE OFFICIAL COMMISSION BOARD ~★</title>
+  <style>
+    /* 2000s Teenage Blog Aesthetic Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #f4f1ea;
+      background-image: radial-gradient(#d3cbbd 1px, transparent 1px);
+      background-size: 12px 12px;
+      color: #111111;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      transition: background 0.2s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CONFETTI CANVAS */
+    #confetti-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 99999;
+    }
+
+    /* RETRO CONFETTI BUTTON */
+    .confetti-btn-container { text-align: center; margin-bottom: 15px; }
+    .confetti-btn {
+      background: #ff0055; color: #ffffff;
+      font-family: 'Courier New', monospace; font-weight: bold; font-size: 0.95rem;
+      padding: 10px 18px; border: 3px solid #000000; box-shadow: 4px 4px 0px #ffff00;
+      cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .confetti-btn:hover { background: #ff3377; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #ffff00; }
+    .confetti-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #ffff00; }
+
+    /* VGEN FLOATING SIDE BANNER */
+    .vgen-side-banner {
+      position: fixed; top: 25px; right: 25px; z-index: 999;
+      background: #ffff00; border: 3px solid #000000; box-shadow: 5px 5px 0px #ff0055;
+      padding: 12px 14px; max-width: 210px; text-align: center;
+      animation: vgenSlideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                 vgenPulse 1.5s 0.8s infinite alternate ease-in-out;
+    }
+    @keyframes vgenSlideIn {
+      0% { transform: translateX(250px) rotate(10deg); opacity: 0; }
+      100% { transform: translateX(0) rotate(-1deg); opacity: 1; }
+    }
+    @keyframes vgenPulse {
+      0% { transform: scale(1) rotate(-1deg); }
+      100% { transform: scale(1.04) rotate(1deg); }
+    }
+    .vgen-banner-tag {
+      background: #ff0055; color: #ffffff; font-size: 0.7rem; font-weight: bold;
+      padding: 2px 6px; display: inline-block; margin-bottom: 6px; border: 1px solid #000; text-transform: uppercase;
+    }
+    .vgen-banner-title { font-size: 0.85rem; font-weight: 900; color: #000000; line-height: 1.2; margin-bottom: 8px; }
+    .vgen-banner-btn {
+      display: block; background: #00ccff; color: #000000; font-weight: bold; font-size: 0.8rem;
+      padding: 6px 8px; border: 2px solid #000000; text-decoration: none; box-shadow: 2px 2px 0px #000;
+      transition: all 0.1s ease;
+    }
+    .vgen-banner-btn:hover { background: #00ff00; transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #000; }
+
+    /* THANK YOU POPUP */
+    .thank-you-box {
+      display: none; background-color: #ffff00; color: #000000; border: 3px solid #000000;
+      box-shadow: 5px 5px 0px #ff0055; padding: 12px 20px; margin-bottom: 20px;
+      text-align: center; font-weight: bold; font-size: 0.9rem; position: relative;
+      animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .thank-you-box .close-btn {
+      position: absolute; top: 4px; right: 8px; background: #000000; color: #ffffff; border: none;
+      font-family: 'Courier New', monospace; font-weight: bold; font-size: 0.8rem; padding: 2px 6px; cursor: pointer;
+    }
+    .thank-you-box .close-btn:hover { background: #ff0055; }
+
+    /* YUKI DATA OVERWRITE STYLES */
+    body.yuki-overwrite-mode {
+      background-color: #000000 !important; background-image: none !important;
+      filter: grayscale(100%) contrast(150%) !important;
+    }
+    body.yuki-overwrite-mode .board-container {
+      background-color: #050505 !important; border-color: #00ff00 !important;
+      box-shadow: 0px 0px 15px #00ff00 !important; color: #00ff00 !important;
+      font-family: 'Courier New', monospace !important;
+    }
+    body.yuki-overwrite-mode table,
+    body.yuki-overwrite-mode .info-box,
+    body.yuki-overwrite-mode .header-banner,
+    body.yuki-overwrite-mode .blacklist-box,
+    body.yuki-overwrite-mode .visitor-counter-top,
+    body.yuki-overwrite-mode .space-time-warning,
+    body.yuki-overwrite-mode .footer-msg,
+    body.yuki-overwrite-mode .contact-links,
+    body.yuki-overwrite-mode .confetti-btn,
+    body.yuki-overwrite-mode .thank-you-box,
+    body.yuki-overwrite-mode .vgen-side-banner,
+    body.yuki-overwrite-mode .art-card,
+    body.yuki-overwrite-mode .art-caption {
+      background-color: #000000 !important; color: #00ff00 !important;
+      border-color: #00ff00 !important; box-shadow: none !important;
+    }
+    body.yuki-overwrite-mode .contact-links a,
+    body.yuki-overwrite-mode .vgen-banner-btn {
+      color: #00ff00 !important; border-color: #00ff00 !important; background: #000000 !important;
+    }
+    body.yuki-overwrite-mode th { background-color: #003300 !important; color: #00ff00 !important; }
+
+    .board-container {
+      width: 100%; max-width: 820px; background-color: #ffffff; border: 4px solid #000000;
+      box-shadow: 8px 8px 0px #ff0055, 16px 16px 0px #00ccff; padding: 25px; position: relative;
+    }
+
+    /* HEADER */
+    .header-banner { position: relative; background: #fff0f5; border: 3px double #ff0055; padding: 20px 15px; margin-bottom: 20px; }
+    .header-banner h1 {
+      font-size: 1.4rem; color: #ff0055; text-transform: uppercase; letter-spacing: -1px;
+      max-width: 65%; background: #ffff00; display: inline-block; padding: 2px 6px; border: 2px solid #000;
+    }
+    .header-subtext { margin-top: 12px; font-size: 0.85rem; font-weight: bold; color: #000; max-width: 65%; line-height: 1.4; }
+
+    /* HARUHI TOP-RIGHT DUAL OVERLAY */
+    .haruhi-top-right { position: absolute; top: -20px; right: 5px; width: 170px; height: 170px; z-index: 10; pointer-events: none; }
+    .haruhi-layer { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
+    .layer-bottom { z-index: 1; animation: rotate-bottom 0.9s steps(1) infinite; }
+    .layer-top { z-index: 2; animation: rotate-top 0.4s steps(1) infinite; }
+    @keyframes rotate-bottom { 0%, 100% { transform: rotate(45deg); } 50% { transform: rotate(-45deg); } }
+    @keyframes rotate-top { 0%, 100% { transform: rotate(-45deg); } 50% { transform: rotate(45deg); } }
+
+    /* VISITOR COUNTER */
+    .visitor-counter-top {
+      background-color: #000000; border: 3px solid #ffff00; padding: 10px 15px; margin-bottom: 25px;
+      color: #ffffff; font-size: 0.85rem; font-weight: bold; text-align: center;
+      box-shadow: 4px 4px 0px #ff0055; line-height: 1.6;
+    }
+    .counter-display {
+      background-color: #ffffff; color: #000000; font-family: 'Courier New', monospace; font-weight: 900;
+      font-size: 1.2rem; padding: 2px 10px; border: 2px solid #ff0055; margin: 0 4px;
+      display: inline-block; letter-spacing: 2px; box-shadow: inset 2px 2px 0px #ccc;
+    }
+
+    .section-title {
+      background-color: #00ccff; color: #000; font-weight: bold; font-size: 1.1rem; padding: 4px 10px;
+      border: 2px solid #000; display: inline-block; margin: 20px 0 12px 0; box-shadow: 3px 3px 0px #000;
+    }
+
+    /* RATES + KYON */
+    .rates-section-wrapper { position: relative; margin-bottom: 20px; }
+    .kyon-overlay-container { position: absolute; bottom: -130px; right: -50px; width: 170px; height: 170px; z-index: 10; pointer-events: none; }
+    .kyon-base {
+      position: absolute; top: 0; left: 0; width: 100%; height: auto; z-index: 2;
+      transform-origin: bottom center; animation: kyon-sway 1s steps(1) infinite;
+      filter: drop-shadow(3px 3px 0px #ff0055);
+    }
+    @keyframes kyon-sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+    .kyon-tired {
+      position: absolute; top: 0; left: 0; width: 100%; height: auto; z-index: 3; transform-origin: bottom center;
+      animation: kyon-sway 1s steps(1) infinite, kyon-tired-flicker 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes kyon-tired-flicker { 0% { opacity: 0.2; } 100% { opacity: 0.95; } }
+    .kyon-swirl { position: absolute; width: 70px; height: 70px; z-index: 1; }
+    .swirl-left { top: 5px; left: -25px; animation: swirl-spin-left 1.8s linear infinite; }
+    .swirl-right { top: 5px; right: -25px; animation: swirl-spin-right 1.8s linear infinite; }
+    @keyframes swirl-spin-left { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes swirl-spin-right { from { transform: scaleX(-1) rotate(0deg); } to { transform: scaleX(-1) rotate(-360deg); } }
+
+    /* TOS + BONK */
+    .tos-section-wrapper { position: relative; margin-top: 15px; }
+    .bonk-overlay-container { position: absolute; top: 40px; right: -10px; width: 170px; height: 170px; z-index: 10; pointer-events: none; }
+    .bonk-layer { position: absolute; top: 0; left: 0; width: 100%; height: auto; filter: drop-shadow(3px 3px 0px #ff0055); }
+    .bonk-layer-bottom { z-index: 1; animation: bonk-swap-bottom 0.5s steps(1) infinite; }
+    .bonk-layer-top { z-index: 2; animation: bonk-swap-top 0.5s steps(1) infinite; }
+    @keyframes bonk-swap-bottom { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0; transform: scale(0.98); } }
+    @keyframes bonk-swap-top { 0%, 100% { opacity: 0; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
+
+    /* TABLES */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 0; background: #fff; border: 2px solid #000; }
+    th, td { border: 1px dashed #000; padding: 10px; text-align: left; font-size: 0.88rem; }
+    th { background-color: #ffea00; color: #000; font-weight: bold; text-transform: uppercase; }
+    .new-badge {
+      display: inline-block; background: #ff0055; color: #fff; font-size: 0.65rem; font-weight: bold;
+      padding: 1px 5px; border: 1px solid #000; margin-left: 4px; transform: rotate(-3deg); vertical-align: middle;
+    }
+
+    /* BOXES */
+    .info-box { background-color: #f9f9f9; border: 2px solid #000; padding: 15px; margin: 15px 0; font-size: 0.88rem; line-height: 1.5; }
+    .blacklist-box { background-color: #fff0f0; border: 2px solid #ff0000; padding: 15px; margin: 15px 0; }
+    .blacklist-title { color: #d80000; font-weight: bold; font-size: 1rem; text-transform: uppercase; }
+
+    /* PORTFOLIO GALLERY */
+    .gallery-note { font-size: 0.82rem; font-style: italic; margin-bottom: 12px; line-height: 1.4; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+    .art-card {
+      background: #fff; border: 3px solid #000; box-shadow: 4px 4px 0px #ff0055;
+      display: flex; flex-direction: column; transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .art-card:nth-child(even) { box-shadow: 4px 4px 0px #00ccff; }
+    .art-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #ffff00; }
+    .art-thumb { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-bottom: 3px solid #000; cursor: zoom-in; background: #eee; }
+    .art-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .art-card.wide .art-thumb { aspect-ratio: 1 / 1; }
+    .art-caption { padding: 8px 10px 10px; font-size: 0.8rem; line-height: 1.35; background: #fffbe0; flex: 1; }
+    .art-tier { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; }
+    .art-price {
+      display: inline-block; margin-top: 6px; background: #ffff00; border: 2px solid #000;
+      font-weight: 900; padding: 1px 6px; font-size: 0.82rem;
+    }
+    .art-breakdown { display: block; margin-top: 4px; font-size: 0.72rem; color: #555; }
+    /* click-to-reveal for gore */
+    .art-thumb.sensitive img { filter: blur(22px) brightness(0.8); transform: scale(1.1); }
+    .art-thumb.sensitive::after {
+      content: "⚠ GORE — CLICK TO REVEAL"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 10px; color: #fff; background: rgba(0,0,0,0.35); font-weight: bold; font-size: 0.85rem;
+    }
+    .price-disclaimer { margin-top: 12px; font-size: 0.8rem; font-style: italic; }
+
+    /* LIGHTBOX */
+    #lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9998; display: none;
+      align-items: center; justify-content: center; padding: 20px; cursor: zoom-out; flex-direction: column;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img { max-width: 100%; max-height: 88vh; border: 3px solid #fff; box-shadow: 6px 6px 0 #ff0055; }
+    #lightbox-cap { color: #fff; font-family: 'Courier New', monospace; font-size: 0.85rem; margin-top: 10px; text-align: center; }
+
+    /* SPACE TIME WARNING + YUKI */
+    .space-time-warning {
+      position: relative; background-color: #e6ffe6; border: 2px solid #00aa00; color: #006600;
+      padding: 20px; padding-left: 110px; margin-top: 25px; font-weight: bold; font-size: 0.85rem;
+      text-align: center; box-shadow: 4px 4px 0px #00aa00;
+    }
+    .yuki-ufo-container { position: absolute; bottom: -15px; left: -20px; width: 130px; height: 130px; z-index: 10; pointer-events: auto; cursor: pointer; }
+    .yuki-layer { position: absolute; top: 0; left: 0; width: 100%; height: auto; filter: drop-shadow(3px 3px 0px #00aa00); transition: transform 0.2s ease-in-out; }
+    .yuki-layer-bottom { z-index: 1; animation: yuki-swap-bottom 0.6s steps(1) infinite; }
+    .yuki-layer-top { z-index: 2; animation: yuki-swap-top 0.6s steps(1) infinite; }
+    @keyframes yuki-swap-bottom { 0%, 100% { opacity: 1; transform: translateY(0px); } 50% { opacity: 0; transform: translateY(-4px); } }
+    @keyframes yuki-swap-top { 0%, 100% { opacity: 0; transform: translateY(-4px); } 50% { opacity: 1; transform: translateY(0px); } }
+    .yuki-ufo-container:hover { animation: ufo-hover-move 1.2s ease-in-out infinite alternate; }
+    @keyframes ufo-hover-move {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(-3deg); }
+      100% { transform: translateY(-3px) rotate(4deg); }
+    }
+
+    .vibe-tag { display: inline-block; background: #ff0055; color: #fff; font-weight: bold; padding: 2px 8px; font-size: 0.75rem; margin-bottom: 10px; transform: rotate(-2deg); }
+    .vibe-check-list { list-style: none; padding-left: 0; }
+    .vibe-check-list li { margin-bottom: 6px; }
+    .footer-msg { margin-top: 25px; padding: 15px; background: #ffffcc; border: 2px dashed #000; font-size: 0.9rem; font-weight: bold; text-align: center; }
+    .contact-links { margin: 15px 0; padding: 12px; background: #ffffff; border: 2px solid #000; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    .contact-links a { color: #000000; text-decoration: underline; font-weight: bold; }
+
+    /* TERMINAL POPUP */
+    #yuki-terminal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.92);
+      z-index: 9999; display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s ease-in-out; cursor: pointer;
+    }
+    #yuki-terminal.active { opacity: 1; pointer-events: auto; }
+    .terminal-content { border: 2px solid #00ff00; padding: 30px; background: #000; box-shadow: 0 0 20px #00ff00; text-align: center; max-width: 500px; font-family: 'Courier New', monospace; }
+    .yuki-msg { color: #00ff00; font-size: 1.3rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; text-shadow: 0 0 8px #00ff00; }
+    .yuki-sub { color: #00aa00; font-size: 0.9rem; margin-bottom: 20px; }
+    .yuki-hint { color: #888888; font-size: 0.75rem; font-style: italic; }
+
+    /* ===== v3 ADDITIONS ===== */
+    html{scroll-behavior:smooth}
+    [id]{scroll-margin-top:70px}
+    .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+    .js .reveal.in{opacity:1;transform:none}
+    .status-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;border:3px solid #000;background:#fff;padding:8px 12px;margin-bottom:12px;font-weight:bold;font-size:.85rem;box-shadow:4px 4px 0 #000}
+    .status-badge{padding:2px 8px;border:2px solid #000;text-transform:uppercase;color:#fff}
+    .st-open{background:#00aa44}.st-waitlist{background:#ff9900}.st-closed{background:#d80000}
+    .slots{display:flex;gap:4px}.slot{width:22px;height:14px;border:2px solid #000;background:#fff;display:block}.slot.taken{background:#ff0055}
+    .nav{position:sticky;top:6px;z-index:500;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;background:#ffff00;border:3px solid #000;padding:6px;margin-bottom:16px;box-shadow:4px 4px 0 #ff0055}
+    .nav a{color:#000;font-weight:bold;font-size:.76rem;text-decoration:none;padding:3px 7px;text-transform:uppercase}
+    .nav a:hover,.nav a.on{background:#000;color:#ffff00}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0 18px}
+    .step{border:2px solid #000;background:#fffbe0;padding:8px;font-size:.78rem;line-height:1.35}
+    .step b{display:inline-block;background:#ff0055;color:#fff;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;margin-right:4px}
+    .quip{font-size:.78rem;font-style:italic;background:#fffbe0;border-left:4px solid #ff0055;padding:4px 8px;margin:0 0 10px}
+    .ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;align-items:end}
+    .rung{border:3px solid #000;background:#fff;text-align:center;font-size:.72rem;font-weight:bold;padding-bottom:4px}
+    .rung img{width:100%;aspect-ratio:1;object-fit:cover;border-bottom:3px solid #000;display:block;margin-bottom:3px}
+    .rung:nth-child(2){margin-bottom:8px}.rung:nth-child(3){margin-bottom:16px}.rung:nth-child(4){margin-bottom:24px}
+    .rung span{display:block;background:#ffff00}
+    .calc{border:3px solid #000;background:#f0fbff;padding:14px;box-shadow:5px 5px 0 #00ccff;display:grid;gap:10px;font-size:.85rem}
+    .calc select,.calc input[type=number],.calc textarea{font-family:inherit;border:2px solid #000;padding:6px;width:100%;background:#fff}
+    .calc textarea{min-height:110px;resize:vertical}
+    .addons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px}
+    .ad{display:flex;gap:6px;align-items:center;border:2px dashed #000;padding:5px 8px;background:#fff;cursor:pointer}
+    .ad.off{opacity:.3;pointer-events:none}
+    .total{font-size:1.3rem;font-weight:900;background:#ffff00;border:3px solid #000;padding:6px 12px;text-align:center}
+    #c-sum{white-space:pre-wrap;background:#fff;border:2px dashed #000;padding:8px;font-family:inherit}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{font-family:inherit;font-weight:bold;border:3px solid #000;background:#ff0055;color:#fff;padding:8px 12px;cursor:pointer;box-shadow:3px 3px 0 #000;text-decoration:none;font-size:.78rem;text-transform:uppercase;display:inline-block}
+    .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}.btn.alt{background:#00ccff;color:#000}
+    .fab{position:fixed;right:18px;bottom:18px;z-index:900;animation:vgenPulse 1.5s infinite alternate ease-in-out}
+    .snd{position:fixed;left:18px;bottom:18px;z-index:900}
+    details{border:2px solid #000;background:#fff;margin-bottom:6px}
+    summary{cursor:pointer;font-weight:bold;padding:8px 10px;background:#fff0f5;font-size:.88rem}
+    details[open] summary{background:#ffea00}
+    details p{padding:8px 10px;font-size:.85rem;line-height:1.5}
+    body.yuki-overwrite-mode :is(.status-bar,.nav,.nav a,.calc,.step,.rung,.rung span,details,summary,.quip,.total,.btn,.ad,#c-sum,.fab,.snd){background:#000!important;color:#00ff00!important;border-color:#00ff00!important;box-shadow:none!important}
+    @media (max-width:640px){.ladder{grid-template-columns:repeat(2,1fr)}.rung:nth-child(n){margin-bottom:0}.fab,.snd{bottom:10px}.fab{right:10px}.snd{left:10px}}
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .vgen-side-banner { position: relative; top: 0; right: 0; max-width: 100%; margin-bottom: 15px; }
+    }
+    @media (max-width: 640px) {
+      body { padding: 10px; flex-direction: column; }
+      .board-container { padding: 15px; }
+      .header-banner h1, .header-subtext { max-width: 100%; }
+      .haruhi-top-right { width: 90px; height: 90px; top: -30px; right: 0; }
+      .kyon-overlay-container, .bonk-overlay-container { display: none; }
+      .blacklist-box ul { max-width: 100% !important; }
+      .space-time-warning { padding-left: 20px; padding-top: 100px; }
+      .yuki-ufo-container { left: 50%; margin-left: -65px; top: -20px; bottom: auto; }
+      th, td { padding: 6px; font-size: 0.8rem; }
+    }
+
+    /* ===== v4 REDESIGN: Y2K desktop-window blog ===== */
+    :root{--ink:#1b1230;--pink:#ff5fa2;--hot:#ff0055;--cyan:#38d6ff;--lemon:#fff35c;--head:'Pixelify Sans','Trebuchet MS','Comic Sans MS',sans-serif}
+    body{font-family:Verdana,Tahoma,'Trebuchet MS',sans-serif;
+      background:radial-gradient(rgba(255,255,255,.7) 2px,transparent 2.5px) 0 0/30px 30px,linear-gradient(135deg,#ffd6ea 0%,#d7f2ff 50%,#fff4bf 100%) fixed}
+    .board-container{border-radius:16px;border-color:var(--ink);box-shadow:8px 8px 0 var(--pink),16px 16px 0 var(--cyan);
+      background-color:#fffdf7;background-image:repeating-linear-gradient(transparent 0 27px,#e9f1ff 27px 28px)}
+    .ticker{overflow:hidden;white-space:nowrap;background:var(--ink);color:var(--lemon);border-radius:8px;margin-bottom:14px;font:.78rem/1 var(--head);padding:6px 0;letter-spacing:1px}
+    .ticker span{display:inline-block;padding-left:100%;animation:tick 26s linear infinite}
+    @keyframes tick{to{transform:translateX(-100%)}}
+    .header-banner{border-radius:14px;border-color:var(--hot);background:linear-gradient(135deg,#fff0f8,#e8f8ff)}
+    .header-banner h1,.section-title,.art-tier,.total,.counter-display{font-family:var(--head)}
+    .header-banner h1{border-radius:6px;font-size:1.5rem;box-shadow:3px 3px 0 var(--ink)}
+    .section-title{display:block;position:relative;margin:28px 0 12px;padding:7px 90px 7px 12px;color:#fff;border:3px solid var(--ink);border-radius:10px 10px 0 0;
+      background:linear-gradient(90deg,#2b59ff,#38d6ff);text-shadow:1px 1px 0 #0a2a8a;box-shadow:none;letter-spacing:.5px}
+    .section-title::after{content:"_ □ ×";position:absolute;right:8px;top:50%;transform:translateY(-50%);font:700 .75rem var(--head);letter-spacing:3px;
+      background:#fff;color:var(--ink);padding:1px 6px;border:2px solid var(--ink);border-radius:5px;text-shadow:none}
+    table{border-radius:8px;border-color:var(--ink);border-width:3px}
+    th{background:linear-gradient(#fff35c,#ffd23c)}
+    tbody tr:hover{background:#fff0f8}
+    .info-box,.blacklist-box,.calc,.gb-entry,.proc{border-radius:12px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--cyan)}
+    .blacklist-box{border-color:#d80000;box-shadow:4px 4px 0 #ffb3b3}
+    .vgen-side-banner,.visitor-counter-top,.status-bar,.thank-you-box,.nav,.footer-msg,.space-time-warning,.contact-links{border-radius:12px}
+    .nav{background:linear-gradient(#f2f7ff,#c9d9ff);border-color:var(--ink);box-shadow:4px 4px 0 var(--pink)}
+    .nav a{border-radius:999px}
+    .btn,.confetti-btn{background:linear-gradient(#ff9ac8,#ff2a7a);border:3px solid var(--ink);border-radius:999px;box-shadow:0 4px 0 var(--ink),inset 0 2px 0 rgba(255,255,255,.55);color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.3)}
+    .btn.alt{background:linear-gradient(#a8ecff,#2cc4f5);color:var(--ink);text-shadow:none}
+    .btn:hover,.confetti-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--ink),inset 0 2px 0 rgba(255,255,255,.55)}
+    .btn:active,.confetti-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+    .btn.on{outline:3px solid var(--lemon);outline-offset:2px}
+    /* polaroid gallery */
+    .art-card{position:relative;padding:8px 8px 0;border:3px solid var(--ink);border-radius:6px;box-shadow:4px 4px 0 var(--pink);transition:rotate .15s,scale .15s,box-shadow .15s}
+    .art-card:nth-child(odd){rotate:-1.3deg}.art-card:nth-child(even){rotate:1.1deg}
+    .art-card:hover{rotate:0deg;scale:1.03;transform:none;box-shadow:6px 6px 0 var(--lemon);z-index:3}
+    .art-card::before{content:"";position:absolute;top:-12px;left:50%;width:74px;height:22px;margin-left:-37px;background:rgba(255,243,92,.8);border:1px dashed rgba(0,0,0,.25);rotate:-3deg;z-index:2}
+    .art-thumb{border:2px solid var(--ink);border-radius:3px}
+    .art-caption{background:#fff}
+    .art-price{border-radius:999px;background:var(--lemon)}
+    .rung{border-radius:10px;overflow:hidden}
+    /* image slots with visible filenames */
+    .ph{position:relative;aspect-ratio:1;background:repeating-linear-gradient(45deg,#fff 0 8px,#f3eaff 8px 16px);overflow:hidden}
+    .ph img{width:100%;height:100%;object-fit:cover;display:block}
+    .ph .ph-name{display:none}
+    .ph.missing img{display:none}
+    .ph.missing .ph-name{display:flex;position:absolute;inset:4px;align-items:center;justify-content:center;text-align:center;padding:4px;font:700 .66rem/1.3 monospace;color:#7a3cff;border:2px dashed #7a3cff;border-radius:6px;word-break:break-all}
+    .rung .ph{border-bottom:3px solid var(--ink);margin-bottom:3px}
+    .ph.tall{aspect-ratio:3/4;max-width:420px;margin:0 auto 8px;border:3px solid var(--ink);border-radius:8px}
+    .proc{background:#fff;padding:12px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+    .pane{display:none;text-align:center;font-size:.85rem}.pane.on{display:block}
+    .gb-entry{display:flex;gap:10px;background:#fff;padding:8px;margin-bottom:10px;font-size:.85rem;align-items:center}
+    .gb-entry p{margin-top:3px}.gb-entry small{color:#ff9900}
+    .av{width:72px;flex:none;border-radius:50%;border:3px solid var(--ink)}
+    .av.missing .ph-name{font-size:.45rem;inset:2px;border-radius:50%}
+    .spk{position:fixed;pointer-events:none;z-index:99998;font-size:14px;animation:spk .7s forwards}
+    @keyframes spk{to{opacity:0;transform:translateY(16px) scale(.3) rotate(90deg)}}
+    body.yuki-overwrite-mode :is(.ticker,.proc,.gb-entry,.pane,.tabs button,.ph){background:#000!important;color:#00ff00!important;border-color:#00ff00!important;box-shadow:none!important}
+    @media (prefers-reduced-motion:reduce){.ticker span,.fab,.spk{animation:none!important}.ticker span{padding-left:0}}
+    @media (max-width:640px){.section-title{padding-right:70px;font-size:.95rem}.art-card:nth-child(n){rotate:0deg}}
+
+    /* ===== v5: Windows XP type + chrome (PNG animations untouched) ===== */
+    :root{--head:'Trebuchet MS',Tahoma,Verdana,sans-serif}
+    body{font-family:Tahoma,Verdana,'Segoe UI',sans-serif}
+    .confetti-btn,.counter-display{font-family:var(--head)}
+    .header-banner h1{font-weight:700;letter-spacing:0}
+    .section-title{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:0;text-shadow:1px 1px 0 #0f1089;
+      background:linear-gradient(#0997ff,#0053ee 8%,#0050ee 40%,#06f 88%,#06f 93%,#005bff 95%,#003dd7);
+      border:2px solid #0831d9;border-bottom:0;border-radius:8px 8px 0 0;padding:6px 90px 6px 10px}
+    .section-title::before,.section-title::after{position:absolute;top:50%;margin-top:-11px;height:22px;line-height:20px;text-align:center;color:#fff;
+      border:1px solid #fff;border-radius:3px;font:700 14px/20px var(--head);text-shadow:none;padding:0;transform:none;letter-spacing:0}
+    .section-title::before{content:"×";right:6px;width:22px;background:linear-gradient(#e97f67,#d3472d)}
+    .section-title::after{content:"_  □";right:32px;width:48px;white-space:pre;background:linear-gradient(#5b9bff,#2160e0)}
+    .info-box,.calc,.proc,.gb-entry{border-color:#0831d9;background-color:#f6f4e9}
+    .gb-entry{background-color:#fff}
+    .nav{background:linear-gradient(#3168d5,#4993e6 8%,#2157d7 20%,#245edb 90%,#1941a5);border:2px solid #0831d9;border-radius:8px}
+    .nav a{color:#fff;font-family:var(--head);text-shadow:1px 1px 0 #0f1089}
+    .nav a:hover,.nav a.on{background:#1e52b7;color:#fff;box-shadow:inset 1px 1px 3px rgba(0,0,0,.5)}
+    th{font-family:var(--head)}
+
+    /* ===== v6: one big XP window that bleeds off the page, taskbar nav, less clutter ===== */
+    .ticker{display:none}
+    .js .reveal{opacity:1;transform:none;transition:none}
+    body{padding:28px 0 70px;
+      background:radial-gradient(ellipse 120% 40% at 25% 108%,#4fa51f 0 62%,transparent 63%) no-repeat,
+                 radial-gradient(ellipse 90% 34% at 95% 112%,#6cc33a 0 62%,transparent 63%) no-repeat,
+                 linear-gradient(#2b78e4,#7fb9f5 55%,#d4eaff);
+      background-attachment:fixed}
+    .board-container{--pad:25px;width:min(940px,calc(100vw + 48px));max-width:none;padding:25px var(--pad);background:#ece9d8;background-image:none;
+      border:3px solid #0831d9;border-top:0;border-radius:10px 10px 0 0;box-shadow:8px 10px 0 rgba(0,0,0,.22),0 24px 40px rgba(0,0,0,.3)}
+    @media (max-width:988px){.board-container{--pad:40px}}
+    .xp-title{display:flex;align-items:center;gap:8px;margin:-25px calc(var(--pad)*-1) 0;padding:6px 8px 6px 12px;color:#fff;font:700 .95rem var(--head);text-shadow:1px 1px 0 #0f1089;
+      background:linear-gradient(#0997ff,#0053ee 8%,#0050ee 40%,#06f 88%,#06f 93%,#005bff 95%,#003dd7);border-radius:7px 7px 0 0}
+    .xp-title>span:nth-child(2){flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .xp-btns{display:flex;gap:3px}
+    .xp-btns i{font:700 14px/20px var(--head);font-style:normal;width:22px;height:22px;text-align:center;border:1px solid #fff;border-radius:3px;background:linear-gradient(#5b9bff,#2160e0);text-shadow:none}
+    .xp-btns i.x{background:linear-gradient(#e97f67,#d3472d)}
+    .addr{margin:0 calc(var(--pad)*-1) 18px;padding:5px 12px;background:#ece9d8;border-bottom:1px solid #aca899;font-size:.78rem;display:flex;gap:8px;align-items:center}
+    .addr span{flex:1;background:#fff;border:1px solid #7f9db9;padding:2px 6px}
+    /* calmer content */
+    .section-title{color:#215dc6;text-shadow:none;background:linear-gradient(90deg,#fff,#c6d3f7);border:1px solid #fff;border-bottom:2px solid #7ba2e7;border-radius:6px 6px 0 0;padding:6px 12px;font-size:.95rem;box-shadow:none}
+    .section-title::before,.section-title::after{display:none}
+    .info-box,.calc,.proc,.gb-entry,.blacklist-box,table{box-shadow:none;border-width:2px;border-color:#7ba2e7;border-radius:8px}
+    .blacklist-box{border-color:#d80000}
+    .header-banner{border-width:2px}
+    .art-card:nth-child(n){rotate:0deg;box-shadow:none;border-width:2px}
+    .art-card::before{display:none}
+    .art-card:hover{rotate:0deg;scale:1.02;box-shadow:0 0 0 3px #f8b330}
+    .vgen-side-banner{top:70px;animation:vgenSlideIn .8s cubic-bezier(.175,.885,.32,1.275) forwards}
+    .fab{animation:none}
+    .fab,.snd{bottom:52px}
+    @media (max-width:640px){.fab,.snd{bottom:48px}.section-title{padding-right:12px}}
+    /* XP taskbar */
+    .nav{position:fixed;left:0;right:0;bottom:0;top:auto;margin:0;height:40px;padding:0 0 0 0;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;align-items:center;gap:4px;z-index:950;
+      border:0;border-top:2px solid #3f8cf3;border-radius:0;box-shadow:none}
+    .nav a{white-space:nowrap;border-radius:3px;margin:5px 0;padding:4px 10px}
+    .nav a.start{align-self:stretch;display:flex;align-items:center;margin:0 8px 0 0;padding:0 22px 0 14px;font:italic 700 1.15rem var(--head);color:#fff;text-transform:none;border-radius:0 14px 14px 0;
+      text-shadow:1px 1px 2px #0c3c0c;background:linear-gradient(#5ec44c,#3c9a2e 12%,#3a9a2c 80%,#2a7a20)}
+    .nav a.start:hover{background:linear-gradient(#7ad868,#4cae3c);box-shadow:none}
+    .nav .clock{margin-left:auto;align-self:stretch;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:.78rem;white-space:nowrap;background:linear-gradient(#0f8ce6,#0b6fd6);border-left:1px solid #0a4aa0}
+    body.yuki-overwrite-mode :is(.xp-title,.addr,.addr span,.nav .clock,.nav a.start){background:#000!important;color:#00ff00!important;border-color:#00ff00!important;box-shadow:none!important}
+
+    /* ===== ADDED: filename placeholders for sample gallery thumbnails ===== */
+    .art-thumb .ph-name{display:none}
+    .art-thumb.missing{background:repeating-linear-gradient(45deg,#fff 0 8px,#f3eaff 8px 16px);cursor:default}
+    .art-thumb.missing img{display:none}
+    .art-thumb.missing::after{display:none}
+    .art-thumb.missing .ph-name{display:flex;position:absolute;inset:6px;align-items:center;justify-content:center;text-align:center;padding:4px;font:700 .72rem/1.3 monospace;color:#7a3cff;border:2px dashed #7a3cff;border-radius:6px;word-break:break-all}
+  
+    /* ===== v7: more Windows XP ===== */
+    :root{--xp:linear-gradient(#0997ff,#0053ee 8%,#0050ee 40%,#06f 88%,#005bff 95%,#003dd7)}
+    .xp-menu{margin:0 calc(var(--pad)*-1);padding:3px 10px;background:#ece9d8;border-bottom:1px solid #fff;display:flex;gap:10px;font-size:.78rem}
+    .xp-menu span{padding:1px 5px}.xp-menu span:hover{background:#316ac5;color:#fff}
+    .xp-hid{display:none!important}
+    /* buttons + inputs */
+    .btn,.confetti-btn{font:400 .8rem Tahoma,sans-serif;text-transform:none;letter-spacing:0;color:#000;text-shadow:none;background:linear-gradient(#fff,#ece9d8 85%,#d6d0c0);border:1px solid #003c74;border-radius:3px;box-shadow:none;padding:5px 14px}
+    .btn.alt{background:linear-gradient(#fff,#ece9d8 85%,#d6d0c0);color:#000}
+    .btn:hover,.confetti-btn:hover{transform:none;background:linear-gradient(#fff,#ece9d8 85%,#d6d0c0);box-shadow:inset 0 0 0 2px #f8b330}
+    .btn:active,.confetti-btn:active{transform:none;background:#d6d0c0;box-shadow:inset 1px 1px 3px rgba(0,0,0,.4)}
+    .btn.on{outline:0;font-weight:700;box-shadow:inset 0 0 0 2px #316ac5}
+    .calc select,.calc input[type=number],.calc textarea{border:1px solid #7f9db9;border-radius:0;font:inherit;box-shadow:inset 1px 1px 2px rgba(0,0,0,.15)}
+    .calc{background:#ece9d8;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;overflow:hidden}
+    .calc::before{content:"⚙ Commission Properties";margin:-14px -14px 0;padding:5px 8px;background:var(--xp);color:#fff;font:700 .85rem Trebuchet MS,Tahoma,sans-serif;text-shadow:1px 1px 0 #0f1089}
+    .total{background:#fff;border:1px solid #7f9db9;font:700 1.1rem Trebuchet MS,sans-serif}
+    .ad{border:1px solid #aca899;background:#fff}
+    /* explorer-style section headers (click to collapse) */
+    .section-title{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;font:700 .92rem Tahoma,sans-serif;color:#215dc6;background:linear-gradient(90deg,#fff,#c6d3f7);border:0;border-radius:6px 6px 0 0;padding:6px 10px}
+    .section-title:hover{color:#428eff}.section-title:focus-visible{outline:2px dotted #316ac5}
+    .section-title::after{display:flex!important;content:"▲";position:static;top:auto;right:auto;margin:0;transform:none;width:18px;height:18px;padding:0;border-radius:50%;background:#fff;border:1px solid #aab8e8;color:#215dc6;align-items:center;justify-content:center;font:.5rem/1 Tahoma;letter-spacing:0;white-space:normal}
+    .section-title.shut::after{content:"▼"}
+    /* panels */
+    .header-banner{background:linear-gradient(90deg,#fff,#c6d3f7);border:1px solid #7ba2e7;border-radius:8px}
+    .header-banner h1{background:transparent;border:0;box-shadow:none;padding:0;color:#215dc6;text-shadow:1px 1px 0 #fff}
+    .info-box{border-width:1px}
+    .status-bar{border:1px solid #7f9db9;border-radius:3px;box-shadow:none;font-weight:400}
+    .slots{border:1px solid #686868;border-radius:3px;padding:2px;background:#fff;gap:2px}
+    .slot{width:12px;height:12px;border:0;background:#fff}
+    .slot.taken{background:linear-gradient(#b4f5b0,#2fbf2f 50%,#1f9d1f)}
+    .visitor-counter-top{box-shadow:none;border-color:#aca899;border-radius:3px}
+    .step,.rung,.contact-links{border:1px solid #7ba2e7;border-radius:6px;background:#fff}
+    .footer-msg{border:1px solid #7ba2e7;background:#fff}
+    /* explorer details view */
+    table{border:1px solid #7f9db9;border-radius:0}
+    th{background:linear-gradient(#fff,#ece9d8);border:0;border-right:1px solid #aca899;border-bottom:1px solid #aca899;text-transform:none;font-weight:400;color:#000}
+    td{border:0;border-bottom:1px solid #eee}
+    tbody tr:nth-child(even){background:#eef3fb}
+    tbody tr:hover{background:#316ac5;color:#fff}
+    /* my pictures: thumbnails view */
+    .gallery-grid{background:#fff;border:1px solid #7f9db9;padding:12px;gap:12px}
+    .art-card:nth-child(n){background:transparent;border:1px solid transparent;padding:6px;box-shadow:none;border-radius:2px;cursor:pointer}
+    .art-card:hover{scale:1;background:#eaf1fc;border-color:#cfdcf5;box-shadow:none}
+    .art-card.sel,.art-card.sel:hover{background:#316ac5;border-color:#316ac5}
+    .art-card.sel .art-caption,.art-card.sel .art-breakdown{color:#fff}
+    .art-caption{background:transparent;padding:6px 2px}
+    .art-thumb{border:1px solid #aca899;border-radius:0}
+    .xp-status{display:flex;background:#ece9d8;border:1px solid #aca899;border-top:0;font-size:.75rem}
+    .xp-status span{padding:3px 8px;border-right:1px solid #aca899}.xp-status span:last-child{flex:1;border:0}
+    /* faq = help center */
+    details{border:1px solid #7ba2e7;border-radius:6px;overflow:hidden}
+    summary{list-style:none;color:#215dc6;background:linear-gradient(90deg,#fff,#dbe5fb)}
+    summary::-webkit-details-marker{display:none}
+    summary::before{content:"▶";display:inline-block;width:16px;height:16px;line-height:16px;margin-right:8px;border-radius:50%;background:#4a7fe0;color:#fff;font-size:.6rem;text-align:center;vertical-align:middle}
+    details[open] summary{background:linear-gradient(90deg,#fff,#dbe5fb)}
+    details[open] summary::before{content:"▼"}
+    /* message boxes */
+    .blacklist-box{padding:0;background:#ece9d8;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;overflow:hidden}
+    .blacklist-title{background:var(--xp);color:#fff;padding:5px 8px;font:700 .85rem Trebuchet MS,sans-serif;text-transform:none;text-shadow:1px 1px 0 #0f1089}
+    .blacklist-title::before{content:"⛔ "}
+    .blacklist-box ul{margin:12px 12px 12px 34px!important}
+    .space-time-warning{background:#ece9d8;color:#111;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;box-shadow:none}
+    .space-time-warning::before{content:"⚠ Warning: Space-Time Continuum";position:absolute;top:0;left:0;right:0;padding:5px 8px;text-align:left;background:var(--xp);color:#fff;font:700 .85rem Trebuchet MS,sans-serif;text-shadow:1px 1px 0 #0f1089;border-radius:5px 5px 0 0}
+    @media (min-width:641px){.space-time-warning{padding-top:42px}}
+    @media (max-width:640px){.space-time-warning{padding-top:130px}}
+    .thank-you-box{background:#ece9d8;color:#111;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;box-shadow:none;padding:40px 20px 16px;font-weight:400}
+    .thank-you-box::before{content:"S.O.S. Brigade";position:absolute;top:0;left:0;right:0;padding:5px 8px;text-align:left;background:var(--xp);color:#fff;font:700 .85rem Trebuchet MS,sans-serif;text-shadow:1px 1px 0 #0f1089;border-radius:5px 5px 0 0}
+    .thank-you-box .close-btn{top:3px;right:4px;width:22px;height:22px;padding:0;font-size:0;border:1px solid #fff;border-radius:3px;background:linear-gradient(#e97f67,#d3472d)}
+    .thank-you-box .close-btn::after{content:"×";font:700 15px/20px Trebuchet MS,sans-serif;color:#fff}
+    #xp-msg{display:none;position:fixed;inset:0;z-index:99990;background:rgba(0,0,0,.25);align-items:center;justify-content:center}
+    #xp-msg.on{display:flex}
+    .mb{width:min(380px,92vw);background:#ece9d8;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;box-shadow:4px 6px 0 rgba(0,0,0,.25)}
+    .mt{background:var(--xp);color:#fff;padding:5px 8px;margin:0 -3px;border-radius:7px 7px 0 0;font:700 .85rem Trebuchet MS,sans-serif;text-shadow:1px 1px 0 #0f1089}
+    .mb p{display:flex;gap:12px;align-items:center;padding:16px;background:#fff;white-space:pre-line}
+    .mb p span:first-child{font-size:30px}.mr{padding:10px;text-align:right}
+    /* tray balloon tip */
+    .vgen-side-banner{top:auto;bottom:96px;right:14px;max-width:230px;background:#ffffe1;border:1px solid #000;border-radius:8px;box-shadow:2px 3px 6px rgba(0,0,0,.35);text-align:left;padding:10px 26px 10px 12px;animation:popIn .25s ease-out}
+    .vgen-side-banner::after{content:"";position:absolute;right:26px;bottom:-8px;width:14px;height:14px;background:#ffffe1;border-right:1px solid #000;border-bottom:1px solid #000;transform:rotate(45deg)}
+    .vgen-banner-tag{background:none;border:0;color:#000;padding:0;font-size:.78rem;text-transform:none}
+    .vgen-banner-title{font-size:.8rem}
+    .vgen-banner-btn{border:1px solid #003c74;border-radius:3px;background:linear-gradient(#fff,#ece9d8 85%,#d6d0c0);box-shadow:none}
+    .vgen-banner-btn:hover{background:linear-gradient(#fff,#ece9d8 85%,#d6d0c0);box-shadow:inset 0 0 0 2px #f8b330;transform:none}
+    .vx{position:absolute;top:2px;right:5px;border:0;background:none;font:700 15px Tahoma;cursor:pointer}
+    @media (max-width:1024px){.vgen-side-banner{position:fixed;top:auto;right:14px;max-width:230px;margin:0}}
+    /* start menu + loading */
+    #startmenu{display:none;position:fixed;left:0;bottom:40px;width:240px;z-index:960;background:#fff;border:2px solid #0831d9;border-radius:8px 8px 0 0;overflow:hidden;box-shadow:4px -2px 10px rgba(0,0,0,.35)}
+    #startmenu.on{display:block}
+    #startmenu h3{background:var(--xp);color:#fff;font:700 1rem Trebuchet MS,sans-serif;padding:10px;text-shadow:1px 1px 0 #0f1089}
+    #startmenu a,#startmenu button{display:block;width:100%;padding:7px 14px;border:0;background:#fff;color:#000;text-align:left;font:13px Tahoma,sans-serif;text-decoration:none;cursor:pointer}
+    #startmenu a:hover,#startmenu button:hover{background:#316ac5;color:#fff}
+    #startmenu hr{border:0;border-top:1px solid #ccc;margin:2px 8px}
+    #xp-load{display:none;position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:99980;width:240px;padding-bottom:12px;background:#ece9d8;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;font-size:.8rem;box-shadow:4px 6px 0 rgba(0,0,0,.25)}
+    #xp-load.on{display:block}
+    #xp-load b{display:block;background:var(--xp);color:#fff;padding:4px 8px;margin-bottom:10px;text-shadow:1px 1px 0 #0f1089}
+    .pb{height:16px;margin:0 12px;border:1px solid #686868;border-radius:3px;overflow:hidden;background:#fff}
+    .pb i{display:block;height:100%;width:60px;background:repeating-linear-gradient(90deg,#37d237 0 8px,transparent 8px 11px);animation:pbm .9s linear infinite}
+    @keyframes pbm{from{margin-left:-60px}to{margin-left:100%}}
+    @media (prefers-reduced-motion:reduce){.pb i{animation:none}}
+    /* yuki: blue screen */
+    #yuki-terminal{background:#0000aa;z-index:99970}
+    .bsod{font:16px 'Lucida Console','Courier New',monospace;color:#fff;max-width:660px;padding:20px;line-height:1.5}
+    .bsod p{margin-bottom:14px}
+    .bs-t{background:#aaa;color:#00a;display:inline-block;padding:0 8px}
+    .bsod .yuki-hint{color:#fff;font-style:normal}
+  
+    /* ===== v8: login, ads, minesweeper ===== */
+    #xp-msg{z-index:100010}
+    body.lock{overflow:hidden}
+    #login{position:fixed;inset:0;z-index:100000;display:flex;flex-direction:column;background:#5a7edc;color:#fff;font-family:Tahoma,sans-serif;transition:opacity .5s}
+    #login.out{opacity:0;pointer-events:none}
+    .lg-top,.lg-bot{background:#00309c;flex:none}
+    .lg-top{height:70px;border-bottom:3px solid;border-image:linear-gradient(90deg,#00309c,#c8d8ff,#00309c) 1}
+    .lg-bot{padding:14px 28px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.85rem;border-top:3px solid;border-image:linear-gradient(90deg,#00309c,#f9a53a,#00309c) 1}
+    .lg-mid{flex:1;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 20% 10%,#7d9cf0,#5a7edc 60%)}
+    .lg-l{flex:1;text-align:right;padding:0 40px;border-right:2px solid rgba(255,255,255,.4)}
+    .lg-r{flex:1;padding:0 40px;display:flex;align-items:center;gap:14px}
+    .lg-logo{font:italic 700 2.6rem Trebuchet MS,sans-serif;text-shadow:2px 2px 3px rgba(0,0,0,.4)}
+    .lg-hint{margin-top:14px;font-size:1rem}
+    .lg-av{width:64px;height:64px;flex:none;border:3px solid #fff;border-radius:6px;background:linear-gradient(#ffd96a,#f9a53a);display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:2px 2px 4px rgba(0,0,0,.4)}
+    #lg-user{font:700 1.1rem Tahoma;padding:5px 8px;border:2px solid #fff;border-radius:4px;width:170px;max-width:100%}
+    .lg-btn{display:block;margin-top:6px;background:linear-gradient(#7ad868,#3a9a2c);color:#fff;border:2px solid #fff;border-radius:14px;padding:5px 16px;font:700 .9rem Tahoma;cursor:pointer}
+    .lg-btn:hover{filter:brightness(1.12)}
+    .lg-off{background:none;border:0;color:#fff;font:.85rem Tahoma;cursor:pointer}
+    .lg-wel{display:none;flex:1;align-items:center;justify-content:center;padding:20px;text-align:center;font:italic 700 2.2rem Trebuchet MS,sans-serif;text-shadow:2px 2px 3px rgba(0,0,0,.4);background:radial-gradient(circle at 20% 10%,#7d9cf0,#5a7edc 60%)}
+    #login.wel .lg-mid{display:none}#login.wel .lg-wel{display:flex}
+    @media (max-width:640px){.lg-mid{flex-direction:column;gap:20px}.lg-l{text-align:center;border:0;padding:0 16px;flex:none}.lg-r{padding:0 16px;flex:none}.lg-logo{font-size:2rem}.lg-bot span{display:none}}
+    /* ads */
+    .ad-lbl{display:block;text-align:right;font-size:.6rem;color:#666;margin-top:8px}
+    .ad-slot{height:60px;border:2px outset #ddd;overflow:hidden;cursor:pointer;background:#fff}
+    .bn{height:100%;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;padding:0 8px;line-height:1.1;font-family:Tahoma,sans-serif}
+    .bn small{display:block;font-size:.65rem}
+    /* minesweeper */
+    .dicon{display:none;position:fixed;left:14px;top:110px;z-index:900;width:82px;padding:4px 2px;text-align:center;color:#fff;text-shadow:1px 1px 2px #000;background:none;border:1px solid transparent;font:12px Tahoma,sans-serif;cursor:pointer}
+    .dicon b{display:block;font-size:34px;font-weight:400}
+    .dicon:hover,.dicon:focus-visible{background:rgba(49,106,197,.55);border-color:rgba(255,255,255,.6);outline:0}
+    @media (min-width:1100px){.dicon{display:block}}
+    .mswin{position:fixed;z-index:940;left:12px;top:150px;background:#ece9d8;border:3px solid #0831d9;border-top:0;border-radius:8px 8px 0 0;box-shadow:4px 6px 0 rgba(0,0,0,.22)}
+    .mswin[hidden]{display:none}
+    .ms-tb{display:flex;align-items:center;justify-content:space-between;margin:0 -3px;padding:4px 4px 4px 8px;background:var(--xp);color:#fff;border-radius:7px 7px 0 0;font:700 .85rem Trebuchet MS,sans-serif;text-shadow:1px 1px 0 #0f1089;cursor:move;touch-action:none;user-select:none}
+    .ms-tb button{width:22px;height:22px;padding:0;border:1px solid #fff;border-radius:3px;background:linear-gradient(#e97f67,#d3472d);color:#fff;font:700 14px/20px Trebuchet MS;cursor:pointer}
+    .ms-body{padding:8px;background:#c0c0c0;display:grid;gap:8px;justify-items:center}
+    .ms-top{display:flex;align-items:center;justify-content:space-between;width:100%;padding:4px;border:3px solid;border-color:#808080 #fff #fff #808080}
+    .lcd{background:#000;color:#f22;font:700 1.3rem 'Courier New',monospace;padding:0 4px;letter-spacing:1px}
+    #ms-face{width:34px;height:34px;font-size:20px;line-height:1;border:3px solid;border-color:#fff #808080 #808080 #fff;background:#c0c0c0;cursor:pointer}
+    #ms-grid{display:grid;grid-template-columns:repeat(9,22px);border:3px solid;border-color:#808080 #fff #fff #808080}
+    .ms-c{width:22px;height:22px;padding:0;border:2px solid;border-color:#fff #808080 #808080 #fff;background:#c0c0c0;font:700 13px Tahoma,sans-serif;line-height:1;cursor:pointer}
+    .ms-c.r{border:1px solid #808080;background:#bdbdbd;cursor:default}
+    .ms-c.boom{background:#f00}
+    .n1{color:#00f}.n2{color:#080}.n3{color:#f00}.n4{color:#008}.n5{color:#800}.n6{color:#088}.n7{color:#000}.n8{color:#808080}
+  
+    /* ===== v9: image start button + sweeper icon ===== */
+    .nav a.start{padding:0;margin:0 8px 0 0;background:none;border-radius:0;box-shadow:none;text-shadow:none}
+    .nav a.start:hover{background:none;box-shadow:none}
+    .nav a.start img{display:none;height:40px;width:auto;max-width:none}
+    .nav a.start .sb-s{display:block}
+    .nav a.start:hover .sb-s,.nav a.start:active .sb-s,.nav a.start.on .sb-s{display:none}
+    .nav a.start:hover .sb-h{display:block}
+    .nav a.start:active .sb-h,.nav a.start.on .sb-h{display:none}
+    .nav a.start:active .sb-c,.nav a.start.on .sb-c{display:block}
+    .dicon img{display:block;width:36px;height:36px;margin:0 auto 2px}
+    .ms-ti{width:16px;height:16px;vertical-align:-3px}
+    #startmenu button .ms-ti{margin-right:2px}
+  
+    /* ===== v10: image ads ===== */
+    .ad-slot{height:auto;min-height:60px;line-height:0;background:#fff}
+    .ad-slot img{display:block;max-width:100%;height:auto;margin:0 auto}
+    .ad-slot .bn{min-height:60px;line-height:1.2}
+  
+    /* ===== v11: HQ notice hidden until it pops up ===== */
+    .vgen-side-banner{display:none}
+    .vgen-side-banner.show{display:block}
+  
+    /* ===== v12: regional change ===== */
+    .nav .regbtn{margin:0 6px 0 auto;align-self:center;white-space:nowrap;border:1px solid #fff;border-radius:3px;background:#1e52b7;color:#fff;font:.76rem Tahoma,sans-serif;padding:4px 10px;cursor:pointer}
+    .nav .regbtn:hover{background:#3c81f3}
+    #reg-btn + .clock{margin-left:0}
+    #reg{display:none;position:fixed;inset:0;z-index:100010;background:rgba(0,0,0,.25);align-items:center;justify-content:center}
+    #reg.on{display:flex}
+    .reg-b{display:grid;gap:8px;padding:16px;background:#fff}
+  </style>
+</head>
+<body>
+  <div id="login" role="dialog" aria-modal="true" aria-label="Sign in">
+    <div class="lg-top"></div>
+    <div class="lg-mid">
+      <div class="lg-l"><div class="lg-logo">S.O.S. Brigade</div><p>Commission Board</p><p class="lg-hint">To begin, type your name and click Sign in</p></div>
+      <div class="lg-r"><div class="lg-av">🛸</div><div><input id="lg-user" value="Guest" maxlength="20" aria-label="Username" autocomplete="off"><button id="lg-go" class="lg-btn" type="button">Sign in ➜</button></div></div>
+    </div>
+    <div class="lg-wel" id="lg-wt" aria-live="polite"></div>
+    <div class="lg-bot"><span>After you log on, the Brigade will inspect your wallet.</span><button class="lg-off" id="lg-off" type="button">⏻ Turn off</button></div>
+  </div>
+
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- VGEN FLOATING SIDE BANNER -->
+  <div class="vgen-side-banner">
+    <div class="vgen-banner-tag">📢 NEW HQ NOTICE!</div>
+    <div class="vgen-banner-title">VGEN ARTIST+ HAS BEEN AUTHORIZED<br>PLEASE VISIT!</div>
+    <a href="https://vgen.co/iburntmytoast" target="_blank" rel="noopener" class="vgen-banner-btn">VISIT VGEN SHOP</a>
+  </div>
+
+  <div class="board-container">
+
+    <div class="xp-title" id="top"><span class="xp-ico">🛸</span><span>S.O.S. Brigade — Commission Board.exe</span><span class="xp-btns"><i>_</i><i>□</i><i class="x">×</i></span></div>
+    <div class="addr"><b>Address</b><span>http://sos-brigade.hq/commissions</span></div>
+
+    <div class="confetti-btn-container">
+      <button class="confetti-btn" onclick="triggerConfettiCelebration()">🎉 [USELESS BUTTON] 🎉</button>
+    </div>
+
+    <div class="thank-you-box" id="thank-you-popup">
+      <button class="close-btn" onclick="closeThankYouBox()">[X]</button>
+      ★ THANK YOU FOR VISITING THE S.O.S. BRIGADE HQ! YOUR SUPPORT IS APPRECIATED! ★
+    </div>
+
+    <div class="vibe-tag">★ PUBLIC EDITION ★ NO SPAMMERS ★</div>
+
+    <!-- HEADER -->
+    <div class="header-banner">
+      <h1>S.O.S. BRIGADE OFFICIAL COMMISSION BOARD</h1>
+      <p class="header-subtext">Hey! Thanks for stopping by! The S.O.S. Brigade commission slots are officially open!<br><br>I have no interest in ordinary DMs, so if you're a bot or a spammer, BACK OFF!</p>
+
+      <div class="haruhi-top-right">
+        <img src="haruhi 2.png" alt="Haruhi Layer 2" class="haruhi-layer layer-bottom">
+        <img src="haruhi.png" alt="Haruhi Layer 1" class="haruhi-layer layer-top">
+      </div>
+    </div>
+
+    <div class="status-bar" id="status-bar"></div>
+    <nav class="nav"><a class="start" href="#top" aria-label="Start"><img class="sb-s" src="XP_Button_Static.png" alt="Start"><img class="sb-h" src="XP_Button_Hover.png" alt=""><img class="sb-c" src="XP_Button_Click.png" alt=""></a><a href="#how">How to order</a><a href="#rates">Rates</a><a href="#gallery">Gallery</a><a href="#process">Process</a><a href="#calc">Calculator</a><a href="#rules">Rules</a><a href="#guestbook">Guestbook</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><span class="clock" id="clock"></span></nav>
+
+    <div class="visitor-counter-top">
+      YOU ARE THE <span class="counter-display" id="hit-counter">000,000</span> PERSON TO STEP FOOT IN THE BRIGADE HQ!
+    </div>
+
+    <div class="section-title" id="how">🛰️ Mission Briefing — How To Order</div>
+    <div class="steps">
+      <div class="step"><b>1</b>Pick a tier &amp; add-ons below</div>
+      <div class="step"><b>2</b>Send your reference + idea</div>
+      <div class="step"><b>3</b>We confirm price &amp; payment</div>
+      <div class="step"><b>4</b>Sketch (2 free revisions)</div>
+      <div class="step"><b>5</b>Line art, render, delivery!</div>
+    </div>
+
+    <!-- RATES -->
+    <div class="rates-section-wrapper" id="rates">
+      <div class="section-title">💥 Official Brigade Rates &amp; Upgrades</div>
+      <p class="quip">Kyon: "The headshot is new. Please pick it so I can stop hearing about full bodies."</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Tier / Type</th>
+            <th>Base Price</th>
+            <th>Add-ons &amp; Upgrades</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Silly Chibi/Gremlin</td>
+            <td>$15</td>
+            <td>• Tiny ornaments / props: +$2<br>• Detailed background: +$10</td>
+          </tr>
+          <tr>
+            <td>Headshot <span class="new-badge">NEW!</span></td>
+            <td>$25</td>
+            <td>• Tiny ornaments / accessories: +$2<br>• Complex props / hands in frame: +$3-9<br>• Atmospheric background: +$6<br>• Chibi cameo: +$5</td>
+          </tr>
+          <tr>
+            <td>Half Body</td>
+            <td>$50</td>
+            <td>• Complex weapons / props / moderate gore: +$3-9<br>• Atmospheric background: +$6</td>
+          </tr>
+          <tr>
+            <td>Full Body</td>
+            <td>█ ENCRYPTED █</td>
+            <td>«OUT OF STOCK FOREVER.»<br>Kyon refused to do the paperwork for this, and drawing shoes is a classified hazard.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <p><strong>🎁 Brigade Bundles:</strong></p>
+        <p style="margin-top: 5px;">• <strong>Chibi Squad:</strong> buy 4 Silly Chibi/Gremlin and get <strong>20% off</strong> (applies to the chibi price and its add-ons).</p>
+        <p style="margin-top: 3px;">• <strong>Free Chibi:</strong> every non-chibi commission above $60 comes with <strong>one free Silly Chibi/Gremlin</strong> (no add-ons).</p>
+      </div>
+
+      <div class="kyon-overlay-container">
+        <img src="kyon 3.png" alt="Swirl Left" class="kyon-swirl swirl-left">
+        <img src="kyon 3.png" alt="Swirl Right" class="kyon-swirl swirl-right">
+        <img src="kyon.png" alt="Kyon" class="kyon-base">
+        <img src="kyon 2.png" alt="Kyon Tired Effect" class="kyon-tired">
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="section-title">💳 Brigade Funding — Payment</div>
+    <div class="info-box">
+      <p><strong>Accepted Payment Methods:</strong></p>
+      <p style="margin-top: 5px;">💵 <strong>Money:</strong> PayPal or Google Pay.</p>
+      <p style="margin-top: 3px;">🎁 <strong>Gift cards:</strong> Roblox, Steam, Amazon, or food-brand gift cards. Steam friend gifting is also fine!</p>
+      <br>
+      <p>• <strong>Process:</strong> Once we've confirmed the commission, I'll tell you exactly how to send payment. Please do NOT post gift-card codes publicly or send any payment before the commission is confirmed.</p>
+      <p>• <strong>Prices are in USD.</strong> Not sure which payment method or gift card works in your country? Ask me first, before sending or buying anything!</p>
+      <p style="color: #d80000; margin-top: 5px; font-weight: bold;">
+        • Safety Warning: No suspicious links, phishing attempts, or 'trust me bro' payment methods. Kyon has suffered enough.
+      </p>
+    </div>
+
+    <!-- PORTFOLIO + PRICE GUIDE -->
+    <div class="section-title" id="gallery">🖼️ Brigade Archives — Sample Work &amp; Price Guide</div>
+    <p class="gallery-note">Click any piece to zoom in. Each one shows which tier it falls under and what it would cost with my current rates, so you can pick a style and know what to expect!</p>
+
+    <div class="ladder">
+      <div class="rung"><div class="ph"><img src="example-chibi-1.png" alt="Chibi example" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 example-chibi-1.png</span></div>Chibi<span>$15</span></div>
+      <div class="rung"><div class="ph"><img src="example-headshot-1.png" alt="Headshot example" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 example-headshot-1.png</span></div>Headshot<span>$25</span></div>
+      <div class="rung"><div class="ph"><img src="example-halfbody-1.png" alt="Half body example" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 example-halfbody-1.png</span></div>Half Body<span>$50</span></div>
+      <div class="rung"><div class="ph"><img src="example-scene-1.png" alt="Scene example" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 example-scene-1.png</span></div>Scene<span>from $120</span></div>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="art-card">
+        <div class="art-thumb" data-full="img/headshot-chibi-cameo.jpg" data-cap="Headshot + chibi cameo">
+          <img src="headshot-chibi-cameo.jpg" alt="Blue-haired girl with a heart hair clip, a hand over her eye, and a tiny chibi on the hand" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Headshot + Chibi Cameo</span><br>
+          <span class="art-price">≈ $30</span>
+          <span class="art-breakdown">$25 headshot + $5 chibi cameo</span>
+        </div>
+      </div>
+
+      <div class="art-card">
+        <div class="art-thumb" data-full="headshot-props.jpg" data-cap="Headshot + complex props + atmospheric background">
+          <img src="headshot-props.jpg" alt="Smiling pink-haired girl in a beret with roses, grapes, a bluebird and a plush, hands to her cheek" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Headshot + Props + BG</span><br>
+          <span class="art-price">≈ $40</span>
+          <span class="art-breakdown">$25 headshot + $9 complex props + $6 atmospheric bg</span>
+        </div>
+      </div>
+
+      <div class="art-card">
+        <div class="art-thumb sensitive" data-full="halfbody-gore.jpg" data-cap="Half Body + atmospheric background + moderate gore + background figure">
+          <img src="halfbody-gore.jpg" alt="Red-haired girl in a blood-stained uniform standing in a dark corridor" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Half Body + Gore</span><br>
+          <span class="art-price">≈ $65</span>
+          <span class="art-breakdown">$50 half body + $9 gore/props + $6 atmospheric bg</span>
+        </div>
+      </div>
+
+      <div class="art-card">
+        <div class="art-thumb" data-full="halfbody-lemon.jpg" data-cap="Half Body + prop + simple background">
+          <img src="halfbody-lemon.jpg" alt="Brown-haired girl in a beret with mushrooms holding up a huge lemon" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Half Body</span><br>
+          <span class="art-price">≈ $53</span>
+          <span class="art-breakdown">$50 half body + $3 prop</span>
+        </div>
+      </div>
+
+      <div class="art-card">
+        <div class="art-thumb" data-full="halfbody-piano.jpg" data-cap="Half Body + atmospheric background + props + background figure">
+          <img src="halfbody-piano.jpg" alt="Blue-haired girl in uniform with an armband playing a piano in a dark room" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Half Body + Scene</span><br>
+          <span class="art-price">≈ $62</span>
+          <span class="art-breakdown">$50 half body + $6 props + $6 atmospheric bg</span>
+        </div>
+      </div>
+
+      <div class="art-card wide">
+        <div class="art-thumb" data-full="chibi-set.jpg" data-cap="4x Silly Chibi/Gremlin with weapons/props">
+          <img src="chibi-set.jpg" alt="Four chibi girls holding weapons and props" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Silly Chibi/Gremlin ×4</span><br>
+          <span class="art-price">≈ $54 total</span>
+          <span class="art-breakdown">4 × ($15 chibi + $2 props) = $68, minus 20% Chibi Squad discount</span>
+        </div>
+      </div>
+
+      <div class="art-card">
+        <div class="art-thumb" data-full="scene-forest.jpg" data-cap="Scene illustration: full body + detailed environment (quote only)">
+          <img src="scene-forest.jpg" alt="Short-haired girl in a sailor uniform walking down a sunlit forest path with butterflies and flowers" loading="lazy">
+        </div>
+        <div class="art-caption">
+          <span class="art-tier">Scene Illustration</span><br>
+          <span class="art-price">Quote — from $120</span>
+          <span class="art-breakdown">Full body + full environment. Not on the regular menu; message me first!</span>
+        </div>
+      </div>
+
+    </div>
+    <p class="price-disclaimer">* Prices shown are estimates using the rates above. Final price is confirmed before I start, and nothing is charged before then.</p>
+
+    <div class="section-title" id="process">🎞️ From Sketch to Final</div>
+    <div class="proc">
+      <div class="tabs"><button class="btn alt on" data-t="0" type="button">1 Sketch</button><button class="btn alt" data-t="1" type="button">2 Line Art</button><button class="btn alt" data-t="2" type="button">3 Final</button></div>
+      <div class="pane on"><div class="ph tall"><img src="process-sketch.png" alt="Sketch stage" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 process-sketch.png</span></div><p>Sketch stage: 2 free revisions. Cancel here for an 80% refund.</p></div>
+      <div class="pane"><div class="ph tall"><img src="process-lineart.png" alt="Line art stage" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 process-lineart.png</span></div><p>Line art stage: big changes may cost extra. Cancel here for a 50% refund.</p></div>
+      <div class="pane"><div class="ph tall"><img src="process-final.png" alt="Final render" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 process-final.png</span></div><p>Rendering, then done! Cancel mid-render for a 25% refund.</p></div>
+    </div>
+
+    <div class="section-title" id="calc">🧮 Brigade Calculator &amp; Request Form</div>
+    <div class="calc">
+      <div class="row">
+        <div style="flex:2;min-width:180px"><label for="c-tier">Tier</label>
+          <select id="c-tier">
+            <option value="15" data-k="c">Silly Chibi/Gremlin — $15</option>
+            <option value="25" data-k="h" selected>Headshot — $25</option>
+            <option value="50" data-k="b">Half Body — $50</option>
+            <option value="120" data-k="s">Scene Illustration — from $120 (quote)</option>
+          </select></div>
+        <div style="flex:1;min-width:90px"><label for="c-qty">Characters</label><input type="number" id="c-qty" min="1" max="6" value="1"></div>
+      </div>
+      <div class="addons">
+        <label class="ad"><input type="checkbox" data-k="ch" data-min="2" data-max="2" data-n="Tiny ornaments/props"> Tiny ornaments / props +$2</label>
+        <label class="ad"><input type="checkbox" data-k="hb" data-min="3" data-max="9" data-n="Complex props/weapons/hands/gore"> Complex props / weapons / hands / moderate gore +$3-9</label>
+        <label class="ad"><input type="checkbox" data-k="hb" data-min="6" data-max="6" data-n="Atmospheric background"> Atmospheric background +$6</label>
+        <label class="ad"><input type="checkbox" data-k="c" data-min="10" data-max="10" data-n="Detailed background"> Detailed background +$10</label>
+        <label class="ad"><input type="checkbox" data-k="h" data-min="5" data-max="5" data-n="Chibi cameo"> Chibi cameo +$5</label>
+      </div>
+      <div class="total" id="c-total"></div>
+      <p class="quip" id="c-promo" style="display:none"></p>
+      <div id="c-sum"></div>
+      <textarea id="c-req" aria-label="Request details"></textarea>
+      <div class="row">
+        <button class="btn" id="c-copy" type="button">📋 Copy request</button>
+        <a class="btn alt" id="c-mail" href="mailto:meliketoast639@gmail.com">✉ Email it</a>
+        <a class="btn alt" href="https://x.com/iburntmytoas_t" target="_blank" rel="noopener">🐦 Open X (paste there)</a>
+      </div>
+      <p style="font-size:.75rem;font-style:italic">Estimates only. X can't prefill DMs, so copy first, then paste. Nothing is charged until we confirm.</p>
+    </div>
+
+    <!-- TOS -->
+    <div class="tos-section-wrapper" id="rules">
+
+      <div class="bonk-overlay-container">
+        <img src="hitting.png" alt="Bonk Frame 1" class="bonk-layer bonk-layer-bottom">
+        <img src="hitting 2.png" alt="Bonk Frame 2" class="bonk-layer bonk-layer-top">
+      </div>
+
+      <div class="section-title">📜 The Chief's Rules — Terms of Service</div>
+
+      <div class="blacklist-box">
+        <div class="blacklist-title">🚫 The Blacklist (Will NOT Draw):</div>
+        <ul style="margin-left: 20px; margin-top: 8px; font-size: 0.88rem; max-width: 68%;">
+          <li>NSFW</li>
+          <li>Heavy mecha</li>
+          <li>Anything I consider inappropriate or outside my comfort zone</li>
+          <li><strong style="color: #ff0055;">Don't make Mikuru cry.</strong></li>
+        </ul>
+      </div>
+
+      <div class="info-box">
+        <p><strong>🖼️ Usage Rights:</strong><br>
+        Commissioned artwork is for personal use only. Want to use it for commercial merch, monetization, advertising, or other business purposes? Talk to me first so we can arrange a separate commercial fee.</p>
+        <br>
+        <p><strong>✏️ Data Alterations — Revisions:</strong></p>
+        <ul style="margin-left: 20px; margin-top: 5px;">
+          <li>You get 2 free revisions during the rough sketch phase.</li>
+          <li>Once I move into line art/rendering, major changes may require an additional fee depending on how much work needs to be redone.</li>
+          <li>Please make sure important details are correct during the sketch phase. Yuki Nagato appreciates efficient data management.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REFUND POLICY -->
+    <div class="section-title">💸 Fair Refund Policy</div>
+    <p class="quip">Kyon: "Cancel early. Seriously. Sketches are cheap, rendering is pain."</p>
+    <table>
+      <thead>
+        <tr><th>Cancellation Stage</th><th>Refund Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cancel during Sketch</td><td>80% Refund</td></tr>
+        <tr><td>Cancel during Line Art</td><td>50% Refund</td></tr>
+        <tr><td>Cancel during Rendering</td><td>25% Refund</td></tr>
+        <tr><td>Completed Artwork</td><td>No Refund</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size: 0.85rem; font-style: italic;">* If something unexpected happens on my end, I'll communicate with you and work something out rather than leaving you hanging.</p>
+
+    <!-- ETA -->
+    <div class="section-title">⏰ ETA (Estimated Time of Arrival)</div>
+    <div class="info-box">
+      Please expect your commission within <strong>1–2 weeks</strong>. Art takes time, and I want to make sure the final piece actually gets the proper treatment instead of being thrown into the void at 3 AM.
+    </div>
+
+    <!-- VIBE CHECK -->
+    <div class="section-title">🎭 THE VIBE CHECK</div>
+    <div class="info-box">
+      <p style="margin-bottom: 8px;">The Brigade member responding to you may vary depending on the situation:</p>
+      <ul class="vibe-check-list" style="margin-left: 15px;">
+        <li>• <strong>Haruhi:</strong> Maximum efficiency.</li>
+        <li>• <strong>Kyon:</strong> Professional exhaustion.</li>
+        <li>• <strong>Yuki:</strong> Cold data precision.</li>
+      </ul>
+      <p style="margin-top: 10px; font-weight: bold; color: #ff0055;">Just be respectful and we'll get along perfectly. FAFO rules apply. 👍</p>
+    </div>
+
+    <div class="section-title" id="guestbook">📖 Brigade Guestbook</div>
+    <!-- EDIT: replace the @names and quotes with real client reviews -->
+    <div class="gb-entry"><div class="ph av"><img src="guest-1.png" alt="Client avatar" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 guest-1.png</span></div><div><b>@Moritzva2</b> <small>★★★★★</small><p>(Swift and excellent work at a reasonable time. Bravo.)</p></div></div>
+    <div class="gb-entry"><div class="ph av"><img src="guest-2.png" alt="Client avatar" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 guest-2.png</span></div><div><b>@client_name_2</b> <small>★★★★★</small><p>(Your client quote #2 goes here!)</p></div></div>
+    <div class="gb-entry"><div class="ph av"><img src="guest-3.png" alt="Client avatar" onerror="this.parentNode.classList.add('missing')"><span class="ph-name">📁 guest-3.png</span></div><div><b>@client_name_3</b> <small>★★★★★</small><p>(Your client quote #3 goes here!)</p></div></div>
+
+    <div class="section-title" id="faq">❓ FAQ — Classified Briefings</div>
+    <details><summary>Can I commission my OC or a fan character?</summary><p>Yes! Send a clear reference, and extra views (back, outfit details) if you have them.</p></details>
+    <details><summary>Do you draw multiple characters or couples?</summary><p>SFW only. Each character adds to the price (use the Characters box above), and bigger scenes are quoted individually.</p></details>
+    <details><summary>Can I get a rush?</summary><p>Ask first. Rush is only possible when I have an open slot, and it adds a fee.</p></details>
+    <details><summary>What files do I get?</summary><p>A full-resolution PNG. Ask if you need a transparent background.</p></details>
+    <details><summary>Can I post it, sell it, or use it for AI?</summary><p>Posting with credit is great. Merch/monetization needs a commercial fee, and reselling or AI training is not allowed.</p></details>
+
+    <!-- SPACE TIME WARNING -->
+    <div class="space-time-warning">
+      <div class="yuki-ufo-container" id="yuki-trigger">
+        <img src="yuki 2.png" alt="Yuki Layer 2" class="yuki-layer yuki-layer-bottom">
+        <img src="yuki.png" alt="Yuki Layer 1" class="yuki-layer yuki-layer-top">
+      </div>
+
+      ⚠️ FOR THOSE WHO WANT TO VIOLATE OUR RULES ⚠️<br>
+      Scams, fraudulent chargebacks, payment fraud, or deliberate attempts to bypass the Brigade's rules will result in immediate cancellation and a blacklist from future commissions.<br><br>
+      <em>Yuki has been notified. Please do not test the space-time continuum. </em>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-msg" id="contact">
+      If all of that sounds good to you, send me your character reference and what you'd like drawn! ✨<br>
+      We'll confirm the details and payment first, and once everything is settled, I'll start working on your piece.<br><br>
+
+      <div class="contact-links">
+        <p style="margin-bottom: 4px; font-weight: bold; color: #ff0055;">📬 READY TO COMMISSION? REACH OUT HERE:</p>
+        <a href="https://x.com/iburntmytoas_t" target="_blank" rel="noopener">[ 🐦 Twitter / X: @iburntmytoas_t ]</a>
+        <a href="mailto:meliketoast639@gmail.com">[ ✉️ Gmail: meliketoast639@gmail.com ]</a>
+      </div>
+
+      <strong>Welcome to the S.O.S. Brigade! Try not to break anything! 🛸</strong>
+    </div>
+
+  </div>
+
+  <a class="btn fab" href="#calc">✉ Commission me</a>
+  <button class="btn alt snd" id="snd" type="button">🔊 Play theme</button>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-cap"></div>
+  </div>
+
+  <!-- YUKI TERMINAL -->
+  <div id="yuki-terminal">
+    <div class="bsod">
+      <p><span class="bs-t">YUKI_NAGATO.SYS</span></p>
+      <p>A problem has been detected and the commission board has been shut down to prevent damage to your computer.</p>
+      <p>DATA_OVERWRITE_SEQUENCE_COMPLETE<br>&lt;N.YUKI&gt; can you see this message?</p>
+      <p>Technical information:<br>*** STOP: 0x000000DE (0x00000001, 0xN.YUKI, 0x00000000, 0x00000000)</p>
+      <p class="yuki-hint">Click anywhere to restore the space-time continuum.</p>
+    </div>
+  </div>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const $ = id => document.getElementById(id);
+
+    /* ====== EDIT ME: commission status (open / waitlist / closed) ====== */
+    const STATUS = { state: 'open', total: 5, taken: 3 };
+    $('status-bar').innerHTML = `<span class="status-badge st-${STATUS.state}">${STATUS.state}</span><span>Slots:</span><span class="slots">${Array.from({length: STATUS.total}, (_, i) => `<i class="slot${i < STATUS.taken ? ' taken' : ''}"></i>`).join('')}</span><span>${Math.max(STATUS.total - STATUS.taken, 0)}/${STATUS.total} open</span>`;
+
+    /* THEME SOUND: opt-in only (no autoplay) */
+    const theme = new Audio('steam.mp3'), snd = $('snd');
+    snd.onclick = () => {
+      if (theme.paused) { theme.play().catch(() => {}); snd.textContent = '🔇 Stop theme'; }
+      else { theme.pause(); snd.textContent = '🔊 Play theme'; }
+    };
+
+    /* VISITOR COUNTER */
+    let visits = 2980;
+    try { visits = parseInt(localStorage.getItem('sos_brigade_v2')) || 2980; } catch (e) {}
+    visits += 1;
+    try { localStorage.setItem('sos_brigade_v2', visits); } catch (e) {}
+    document.getElementById('hit-counter').textContent = String(visits).padStart(6, '0');
+
+    /* GALLERY LIGHTBOX + GORE REVEAL */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCap = document.getElementById('lightbox-cap');
+
+    /* ADDED: show the expected filename when a sample image is missing */
+    document.querySelectorAll('.art-thumb').forEach(thumb => {
+      const img = thumb.querySelector('img');
+      const label = document.createElement('span');
+      label.className = 'ph-name';
+      label.textContent = '📁 ' + thumb.dataset.full.split('/').pop();
+      thumb.appendChild(label);
+      const markMissing = () => thumb.classList.add('missing');
+      img.addEventListener('error', markMissing);
+      if (img.complete && !img.naturalWidth) markMissing();
+    });
+
+    document.querySelectorAll('.art-thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        if (thumb.classList.contains('missing')) return; // nothing to zoom into yet
+        if (thumb.classList.contains('sensitive')) {
+          thumb.classList.remove('sensitive'); // first click reveals
+          return;
+        }
+        lightboxImg.src = thumb.dataset.full;
+        lightboxCap.textContent = thumb.dataset.cap || '';
+        lightbox.classList.add('active');
+      });
+    });
+    lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('active'); });
+
+    /* CALCULATOR + REQUEST FORM */
+    const tier = $('c-tier'), qty = $('c-qty'), ads = [...document.querySelectorAll('.addons input')];
+    function calc() {
+      const o = tier.selectedOptions[0], k = o.dataset.k, base = +tier.value, q = Math.max(1, Math.min(6, +qty.value || 1));
+      let lo = base, hi = base; const names = [];
+      ads.forEach(a => {
+        const ok = a.dataset.k.includes(k);
+        a.disabled = !ok; a.parentElement.classList.toggle('off', !ok);
+        if (!ok) a.checked = false;
+        if (a.checked) { lo += +a.dataset.min; hi += +a.dataset.max; names.push(a.dataset.n); }
+      });
+      lo *= q; hi *= q;
+      let perk = '', saveLo = 0, saveHi = 0;
+      if (k === 'c' && q >= 4) { saveLo = lo * 0.2; saveHi = hi * 0.2; lo *= 0.8; hi *= 0.8; perk = '🎉 Chibi Squad: 20% off applied!'; }
+      else if (k !== 'c' && lo > 60) { saveLo = saveHi = 15; perk = '🎁 Free Silly Chibi/Gremlin included with this commission!'; }
+      else if (k !== 'c' && hi > 60) perk = '🎁 Go above $60 and you get a free Silly Chibi/Gremlin!';
+      else if (k === 'c') perk = 'Tip: buy 4 chibi for 20% off!';
+      const m = n => '$' + (Number.isInteger(n) ? n : n.toFixed(2));
+      const txt = k === 's' ? `from ${m(lo)} (quote)` : (lo === hi ? m(lo) : `${m(lo)}-${m(hi)}`);
+      $('c-total').textContent = 'Estimated: ' + txt;
+      const saved = saveHi ? ` You have saved ${saveLo === saveHi ? m(saveLo) : m(saveLo) + '-' + m(saveHi)}!!!!` : '';
+      $('c-promo').textContent = perk + saved;
+      $('c-promo').style.display = perk ? 'block' : 'none';
+      $('c-sum').textContent = `Hi! I'd like to commission:\n• Tier: ${o.textContent.split(' — ')[0]} x ${q}\n• Add-ons: ${names.join(', ') || 'none'}\n• Estimate: ${txt}` + (/applied|included/.test(perk) ? `\n• Perk: ${perk.replace(/^\S+\s/, '')}` : '');
+    }
+    [tier, qty, ...ads].forEach(el => el.addEventListener('input', calc));
+    $('c-req').value = '• Character name + reference link:\n• Pose / expression / mood:\n• Background (none / simple / atmospheric):\n• Anything else:';
+    calc();
+    const reqText = () => $('c-sum').textContent + '\n' + $('c-req').value;
+    $('c-copy').onclick = async () => {
+      try { await navigator.clipboard.writeText(reqText()); $('c-copy').textContent = '✔ Copied!'; } catch (e) { $('c-req').select(); }
+      setTimeout(() => { $('c-copy').textContent = '📋 Copy request'; }, 2000);
+    };
+    $('c-mail').onclick = e => { e.currentTarget.href = 'mailto:meliketoast639@gmail.com?subject=' + encodeURIComponent('Commission request') + '&body=' + encodeURIComponent(reqText()); };
+
+    /* LIGHTBOX ARROW KEYS */
+    const thumbs = [...document.querySelectorAll('.art-thumb')];
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active') || !/^Arrow(Left|Right)$/.test(e.key)) return;
+      let i = thumbs.findIndex(t => t.dataset.full === lightboxImg.getAttribute('src'));
+      i = (i + (e.key === 'ArrowRight' ? 1 : thumbs.length - 1)) % thumbs.length;
+      lightboxImg.src = thumbs[i].dataset.full; lightboxCap.textContent = thumbs[i].dataset.cap;
+    });
+
+    /* SCROLL REVEAL + NAV HIGHLIGHT */
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.08 });
+      document.querySelectorAll('.board-container > :not(.nav):not(.thank-you-box):not(.confetti-btn-container), .gallery-grid > *, .steps > *, .rung').forEach(el => { el.classList.add('reveal'); io.observe(el); });
+    }
+    const navLinks = [...document.querySelectorAll('.nav a:not(.start)')];
+    addEventListener('scroll', () => {
+      let cur = null;
+      navLinks.forEach(a => { const t = document.querySelector(a.hash); if (t && t.getBoundingClientRect().top < 140) cur = a; });
+      navLinks.forEach(a => a.classList.toggle('on', a === cur));
+    }, { passive: true });
+
+    /* TABS + SPARKLE TRAIL */
+    document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+      document.querySelectorAll('.pane').forEach((p, i) => p.classList.toggle('on', i === +b.dataset.t));
+    }));
+    /* TASKBAR CLOCK */
+    const clk = $('clock');
+    const tickClock = () => { clk.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); };
+    tickClock(); setInterval(tickClock, 30000);
+
+    /* YUKI DATA OVERWRITE */
+    const yukiTrigger = document.getElementById('yuki-trigger');
+    const yukiTerminal = document.getElementById('yuki-terminal');
+    let isOverwritten = false;
+
+    function textToBinary(text) {
+      return text.split('').map(char => {
+        if (char === ' ' || char === '\n') return char;
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+      }).join(' ');
+    }
+
+    const textNodesToBinary = [];
+    function collectTextNodes(element) {
+      for (let node of element.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+          textNodesToBinary.push({ node: node, original: node.nodeValue });
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.id !== 'yuki-terminal') {
+          collectTextNodes(node);
+        }
+      }
+    }
+    collectTextNodes(document.querySelector('.board-container'));
+
+    let ystate = 0, ytimer, deadAudio;
+    function showBsod() {
+      ystate = 2; clearTimeout(ytimer);
+      document.getElementById('xp-msg').classList.remove('on');
+      document.body.classList.remove('yuki-overwrite-mode');
+      yukiTerminal.classList.add('active');
+      if (deadAudio) { deadAudio.currentTime = 0; deadAudio.play().catch(() => {}); }
+    }
+    function toggleYukiOverwrite(e) {
+      e.stopPropagation();
+      if (ystate === 0) {
+        ystate = 1; isOverwritten = true;
+        document.body.classList.add('yuki-overwrite-mode');
+        textNodesToBinary.forEach(item => { item.node.nodeValue = textToBinary(item.original); });
+        new Audio('error.mp3').play().catch(() => {});
+        deadAudio = new Audio('dead.mp3'); deadAudio.load();
+        msg('Yuki.exe', '❌', 'Yuki.exe has encountered a problem and needs to close.\nData overwrite in progress...', showBsod);
+        ytimer = setTimeout(showBsod, 2500);
+      } else {
+        ystate = 0; isOverwritten = false; clearTimeout(ytimer);
+        if (deadAudio) deadAudio.pause();
+        document.getElementById('xp-msg').classList.remove('on');
+        document.body.classList.remove('yuki-overwrite-mode');
+        yukiTerminal.classList.remove('active');
+        textNodesToBinary.forEach(item => { item.node.nodeValue = item.original; });
+      }
+    }
+    yukiTrigger.addEventListener('click', toggleYukiOverwrite);
+    yukiTerminal.addEventListener('click', toggleYukiOverwrite);
+
+    /* CONFETTI */
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let confettiParticles = [];
+
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class ConfettiParticle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20 - Math.random() * 50;
+        this.size = Math.random() * 8 + 6;
+        this.color = ['#ff0055', '#ffff00', '#00ccff', '#00ff00', '#ff9900', '#ffffff'][Math.floor(Math.random() * 6)];
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 10;
+      }
+      update() { this.y += this.speedY; this.x += this.speedX; this.rotation += this.rotationSpeed; }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    let animationFrame;
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiParticles.forEach(p => { p.update(); p.draw(); });
+      // filter (instead of splice inside forEach) so no particles get skipped
+      confettiParticles = confettiParticles.filter(p => p.y <= canvas.height + 20);
+      if (confettiParticles.length > 0) {
+        animationFrame = requestAnimationFrame(animateConfetti);
+      }
+    }
+
+    function closeThankYouBox() { document.getElementById('thank-you-popup').style.display = 'none'; }
+
+    function triggerConfettiCelebration() {
+      const sound = new Audio('confetti.mp3'); // stacks intentionally
+      sound.play().catch(e => console.log('Audio autoplay prevented:', e));
+
+      for (let i = 0; i < 120; i++) confettiParticles.push(new ConfettiParticle());
+      cancelAnimationFrame(animationFrame);
+      animateConfetti();
+
+      const box = document.getElementById('thank-you-popup');
+      box.style.display = 'block';
+      box.style.animation = 'none';
+      box.offsetHeight; // reflow
+      box.style.animation = 'popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    }
+  </script>
+
+  <script>
+    /* ===== v7: more Windows XP ===== */
+    document.querySelector('.addr').insertAdjacentHTML('beforebegin', '<div class="xp-menu"><span>File</span><span>Edit</span><span>View</span><span>Favorites</span><span>Tools</span><span>Help</span></div>');
+    document.body.insertAdjacentHTML('beforeend', '<div id="xp-msg"><div class="mb"><div class="mt" id="mt"></div><p><span id="mi"></span><span id="mm"></span></p><div class="mr"><button class="btn" id="mok" type="button">OK</button></div></div></div><div id="xp-load"><b>Loading...</b><div class="pb"><i></i></div></div>');
+    function msg(t, i, m, cb) { $('mt').textContent = t; $('mi').textContent = i; $('mm').textContent = m; window._mcb = cb; $('xp-msg').classList.add('on'); }
+    $('mok').onclick = () => { $('xp-msg').classList.remove('on'); const f = window._mcb; window._mcb = null; if (f) f(); };
+    let loadTimer;
+    function load() { const l = $('xp-load'); l.classList.add('on'); clearTimeout(loadTimer); loadTimer = setTimeout(() => l.classList.remove('on'), 900); }
+    document.querySelector('.confetti-btn').addEventListener('click', load);
+
+    /* collapsible section headers */
+    const stopAt = el => el.classList.contains('section-title') || el.querySelector('.section-title') || el.matches('.space-time-warning,.footer-msg');
+    document.querySelectorAll('.section-title').forEach(t => {
+      t.tabIndex = 0; t.setAttribute('role', 'button'); t.setAttribute('aria-expanded', 'true');
+      const tog = () => {
+        const c = t.classList.toggle('shut'); t.setAttribute('aria-expanded', String(!c));
+        for (let n = t.nextElementSibling; n && !stopAt(n); n = n.nextElementSibling) n.classList.toggle('xp-hid', c);
+      };
+      t.onclick = tog;
+      t.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } };
+    });
+    const openSection = id => {
+      const t = document.getElementById(id), s = t && (t.classList.contains('section-title') ? t : t.querySelector('.section-title'));
+      if (s && s.classList.contains('shut')) s.click();
+    };
+    document.querySelectorAll('.nav a[href^="#"]').forEach(a => a.addEventListener('click', () => openSection(a.hash.slice(1))));
+
+    /* my pictures: selection + status bar */
+    const gg = document.querySelector('.gallery-grid');
+    gg.insertAdjacentHTML('afterend', '<div class="xp-status"><span id="gs1"></span><span id="gs2"></span></div>');
+    const tiles = [...gg.children];
+    $('gs1').textContent = tiles.length + ' object(s)';
+    tiles.forEach(c => c.addEventListener('click', () => {
+      tiles.forEach(x => x.classList.toggle('sel', x === c));
+      $('gs2').textContent = c.querySelector('.art-tier').textContent + ' - ' + c.querySelector('.art-price').textContent;
+    }));
+
+    /* balloon tip close */
+    const vg = document.querySelector('.vgen-side-banner');
+    vg.insertAdjacentHTML('afterbegin', '<button class="vx" type="button" aria-label="Close notice">×</button>');
+    vg.querySelector('.vx').onclick = () => vg.remove();
+
+    /* start menu */
+    const sm = document.createElement('div'); sm.id = 'startmenu';
+    sm.innerHTML = '<h3>S.O.S. Brigade</h3>' + [...document.querySelectorAll('.nav a:not(.start)')].map(a => `<a href="${a.hash}">${a.textContent}</a>`).join('') + '<hr><a href="#calc">✉ Commission me</a><button type="button" id="off">⏻ Turn Off Computer</button>';
+    document.body.append(sm);
+    document.querySelector('.nav .start').addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); sm.classList.toggle('on'); });
+    document.addEventListener('click', e => { if (!sm.contains(e.target)) sm.classList.remove('on'); });
+    sm.addEventListener('click', e => { const a = e.target.closest('a'); if (a) { sm.classList.remove('on'); openSection(a.hash.slice(1)); load(); } });
+    $('off').onclick = () => { sm.classList.remove('on'); msg('Turn Off Computer', '🚫', 'Haruhi has declined your request.\nThe Brigade never sleeps.'); };
+  </script>
+
+  <button id="ms-ico" class="dicon" type="button"><img src="sweeper.svg" alt="">Minesweeper</button>
+  <div id="ms-win" class="mswin" hidden>
+    <div class="ms-tb" id="ms-tb"><span><img class="ms-ti" src="sweeper.svg" alt=""> Minesweeper</span><button id="ms-x" type="button" aria-label="Close Minesweeper">×</button></div>
+    <div class="ms-body">
+      <div class="ms-top"><span class="lcd" id="ms-mines" aria-label="Mines left">010</span><button id="ms-face" type="button" aria-label="New game">🙂</button><span class="lcd" id="ms-time" aria-label="Seconds">000</span></div>
+      <div id="ms-grid"></div>
+      <button class="btn" id="ms-flag" type="button">🚩 Flag mode: off</button>
+    </div>
+  </div>
+
+  <script>
+    /* ===== v8: login, ads, minesweeper ===== */
+    /* login */
+    const login = $('login'), lockEls = document.querySelectorAll('.board-container,.nav,.fab,.snd,.vgen-side-banner');
+    document.body.classList.add('lock'); lockEls.forEach(e => { e.inert = true; });
+    /* HQ notice balloon: pops up 5 seconds after sign-in, with a sound */
+    const noticeEl = document.querySelector('.vgen-side-banner');
+    let noticeSnd;
+    function showNotice() {
+      if (!noticeEl || !noticeEl.isConnected) return;
+      noticeEl.setAttribute('role', 'status');
+      noticeEl.classList.add('show');
+      if (noticeSnd) noticeSnd.play().catch(() => {});
+    }
+    const signIn = () => {
+      if (login.classList.contains('wel')) return;
+      const n = $('lg-user').value.trim() || 'Guest';
+      new Audio('win95.mp3').play().catch(() => {});
+      noticeSnd = new Audio('notify.mp3'); noticeSnd.preload = 'auto';
+      $('lg-wt').textContent = 'Welcome, ' + n;
+      login.classList.add('wel');
+      setTimeout(() => { login.classList.add('out'); document.body.classList.remove('lock'); lockEls.forEach(e => { e.inert = false; }); if (innerWidth >= 1440) openMs(); setTimeout(showNotice, 5000); }, 2200);
+      setTimeout(() => login.remove(), 2800);
+    };
+    $('lg-go').onclick = signIn;
+    $('lg-user').addEventListener('keydown', e => { if (e.key === 'Enter') signIn(); });
+    $('lg-off').onclick = () => msg('Turn Off Computer', '🚫', 'Haruhi has declined your request.\nThe Brigade never sleeps.');
+    $('lg-user').focus();
+
+    /* random banner ads */
+    /* ===== EDIT ME: your ads. Put a link in href to make an ad clickable. ===== */
+    const ADS = [
+      { src: 'ad-1.png', href: '' },
+      { src: 'ad-2.png', href: '' }
+    ];
+    const AD_MSG = ['Ad clicked! Kyon says you have won absolutely nothing.', 'Congratulations! You have been enrolled in 0 newsletters.', 'This ad would like you to commission an artist instead.'];
+    function mkAd(start) {
+      const w = document.createElement('div'); w.className = 'ad-wrap';
+      w.innerHTML = '<small class="ad-lbl">ADVERTISEMENT</small><div class="ad-slot" role="button" tabindex="0" aria-label="Advertisement"></div>';
+      const s = w.querySelector('.ad-slot'); let cur = start % ADS.length;
+      const show = () => {
+        const ad = ADS[cur], img = new Image();
+        img.alt = 'Advertisement'; img.src = ad.src;
+        img.onerror = () => { s.innerHTML = '<div class="bn" style="color:#7a3cff;border:2px dashed #7a3cff;font:700 .75rem monospace">📁 ' + ad.src + '</div>'; };
+        s.replaceChildren(img);
+      };
+      const noSnd = new Audio('no.mp3');
+	  const click = () => {
+	  // play "no" every time an ad box is pressed
+	  noSnd.currentTime = 0;
+	  noSnd.play().catch(() => {});
+	  const ad = ADS[cur];
+	  if (ad.href) window.open(ad.href, '_blank', 'noopener');
+	  else msg('Brigade Ads', '📢', AD_MSG[Math.floor(Math.random() * AD_MSG.length)]);
+	  };
+      const next = () => { if (ADS.length > 1) { let i; do { i = Math.floor(Math.random() * ADS.length); } while (i === cur); cur = i; } show(); };
+      show(); s.onclick = click; s.onkeydown = e => { if (e.key === 'Enter') click(); };
+      if (!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(next, 8000 + Math.random() * 3000);
+      return w;
+    }
+    document.querySelector('.addr').insertAdjacentElement('afterend', mkAd(0));
+    document.querySelector('.footer-msg').insertAdjacentElement('afterend', mkAd(1));
+
+    /* minesweeper (9x9, 10 mines) */
+    (() => {
+      const W = 9, H = 9, M = 10, el = $('ms-grid'), face = $('ms-face'), win = $('ms-win');
+      let g, over, won, started, t, timer, flags, flagMode = false;
+      const pad = n => String(Math.max(0, Math.min(999, n))).padStart(3, '0');
+      const nb = i => { const x = i % W, y = (i / W) | 0, a = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const X = x + dx, Y = y + dy; if ((dx || dy) && X >= 0 && X < W && Y >= 0 && Y < H) a.push(Y * W + X); } return a; };
+      function init() { clearInterval(timer); g = Array.from({ length: W * H }, () => ({ m: 0, r: 0, f: 0, n: 0 })); over = won = started = false; t = 0; flags = 0; paint(); }
+      function paint() {
+        const fi = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.i : null;
+        el.innerHTML = g.map((c, i) => {
+          let cls = 'ms-c', tx = '', lb = 'hidden';
+          if (c.r) { cls += ' r'; if (c.m) { tx = '💣'; lb = 'mine'; } else if (c.n) { tx = c.n; cls += ' n' + c.n; lb = c.n + ' nearby'; } else lb = 'empty'; if (c.boom) cls += ' boom'; }
+          else if (c.f) { tx = '🚩'; lb = 'flagged'; }
+          return `<button type="button" class="${cls}" data-i="${i}" aria-label="Row ${((i / W) | 0) + 1} column ${i % W + 1}, ${lb}">${tx}</button>`;
+        }).join('');
+        $('ms-mines').textContent = pad(M - flags); $('ms-time').textContent = pad(t);
+        face.textContent = over ? '😵' : won ? '😎' : '🙂';
+        if (fi !== null && fi !== undefined) { const b = el.querySelector(`[data-i="${fi}"]`); if (b) b.focus(); }
+      }
+      function reveal(i) { const c = g[i]; if (c.r || c.f) return; c.r = 1; if (!c.m && !c.n) nb(i).forEach(reveal); }
+      function act(i, flag) {
+        if (over || won) return;
+        const c = g[i];
+        if (flag) { if (c.r) return; c.f = c.f ? 0 : 1; flags += c.f ? 1 : -1; paint(); return; }
+        if (c.f || c.r) return;
+        if (!started) {
+          started = true; let k = 0;
+          while (k < M) { const j = Math.floor(Math.random() * W * H); if (j !== i && !g[j].m) { g[j].m = 1; k++; } }
+          g.forEach((x, j) => { x.n = nb(j).filter(q => g[q].m).length; });
+          timer = setInterval(() => { t++; $('ms-time').textContent = pad(t); }, 1000);
+        }
+        if (c.m) { over = true; clearInterval(timer); g.forEach(x => { if (x.m) x.r = 1; }); c.boom = 1; }
+        else { reveal(i); if (g.filter(x => !x.r).length === M) { won = true; clearInterval(timer); g.forEach(x => { if (x.m) x.f = 1; }); flags = M; } }
+        paint();
+      }
+      el.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) act(+b.dataset.i, flagMode); });
+      el.addEventListener('contextmenu', e => { const b = e.target.closest('[data-i]'); if (b) { e.preventDefault(); act(+b.dataset.i, true); } });
+      el.addEventListener('keydown', e => { const b = e.target.closest('[data-i]'); if (b && /^f$/i.test(e.key)) act(+b.dataset.i, true); });
+      face.onclick = init;
+      $('ms-flag').onclick = e => { flagMode = !flagMode; e.currentTarget.textContent = '🚩 Flag mode: ' + (flagMode ? 'on' : 'off'); e.currentTarget.classList.toggle('on', flagMode); };
+      window.openMs = () => {
+        win.hidden = false;
+        if (innerWidth < 1440) { win.style.left = Math.max(8, (innerWidth - win.offsetWidth) / 2) + 'px'; win.style.top = '90px'; }
+      };
+      $('ms-x').onclick = () => { win.hidden = true; };
+      $('ms-ico').onclick = openMs;
+      const tb = $('ms-tb');
+      tb.addEventListener('pointerdown', e => {
+        if (e.target.closest('button')) return;
+        const ox = e.clientX - win.offsetLeft, oy = e.clientY - win.offsetTop; tb.setPointerCapture(e.pointerId);
+        const mv = m => { win.style.left = Math.min(Math.max(m.clientX - ox, 0), innerWidth - 60) + 'px'; win.style.top = Math.min(Math.max(m.clientY - oy, 0), innerHeight - 80) + 'px'; };
+        const up = () => { tb.removeEventListener('pointermove', mv); tb.removeEventListener('pointerup', up); };
+        tb.addEventListener('pointermove', mv); tb.addEventListener('pointerup', up);
+      });
+      sm.querySelector('hr').insertAdjacentHTML('beforebegin', '<button type="button" id="msb"><img class="ms-ti" src="sweeper.svg" alt=""> Minesweeper</button>');
+      $('msb').onclick = () => { sm.classList.remove('on'); openMs(); };
+      init();
+    })();
+  </script>
+
+  <script>
+    /* keep the Start button in its "pressed" image while the menu is open */
+    (() => {
+      const st = document.querySelector('.nav .start');
+      new MutationObserver(() => st.classList.toggle('on', sm.classList.contains('on'))).observe(sm, { attributes: true, attributeFilter: ['class'] });
+    })();
+  </script>
+
+  <script>
+    /* ===== v12: regional change ===== */
+    (() => {
+      const CUR = 'en';
+      const REGIONS = [
+        { id: 'en', label: '🇺🇸 English (USD)', href: 'index.html' },
+        { id: 'vi', label: '🇻🇳 Tiếng Việt (VNĐ)', href: 'board-xp-vi.html' }
+      ];
+      document.body.insertAdjacentHTML('beforeend', '<div id="reg" role="dialog" aria-modal="true" aria-label="Regional Change"><div class="mb"><div class="mt">🌐 Regional Change</div><div class="reg-b"><p>Choose your region:</p>' + REGIONS.map(r => `<button class="btn" type="button" data-href="${r.href}"${r.id === CUR ? ' aria-current="true"' : ''}>${r.label}${r.id === CUR ? ' ✓' : ''}</button>`).join('') + '</div><div class="mr"><button class="btn" id="reg-x" type="button">Cancel</button></div></div></div>');
+      const reg = $('reg'), open = () => reg.classList.add('on');
+      reg.addEventListener('click', e => {
+        const b = e.target.closest('[data-href]'); if (!b) return;
+        if (b.getAttribute('aria-current')) reg.classList.remove('on'); else { load(); location.href = b.dataset.href; }
+      });
+      $('reg-x').onclick = () => reg.classList.remove('on');
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') reg.classList.remove('on'); });
+      $('clock').insertAdjacentHTML('beforebegin', '<button class="regbtn" id="reg-btn" type="button">🌐 Regional Change</button>');
+      $('reg-btn').onclick = open;
+      sm.querySelector('hr').insertAdjacentHTML('beforebegin', '<button type="button" id="regs">🌐 Regional Change</button>');
+      $('regs').onclick = () => { sm.classList.remove('on'); open(); };
+    })();
+  </script>
+</body>
+</html>
