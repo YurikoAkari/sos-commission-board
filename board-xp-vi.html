@@ -1027,7 +1027,7 @@
     const $ = id => document.getElementById(id);
 
     /* ====== EDIT ME: commission status (open / waitlist / closed) ====== */
-    const STATUS = { state: 'open', total: 5, taken: 3 };
+    const STATUS = { state: 'closed', total: 5, taken: 5 };
     $('status-bar').innerHTML = `<span class="status-badge st-${STATUS.state}">${{ open: 'mở', waitlist: 'chờ', closed: 'đóng' }[STATUS.state]}</span><span>Slot:</span><span class="slots">${Array.from({length: STATUS.total}, (_, i) => `<i class="slot${i < STATUS.taken ? ' taken' : ''}"></i>`).join('')}</span><span>${Math.max(STATUS.total - STATUS.taken, 0)}/${STATUS.total} còn trống</span>`;
 
     /* THEME SOUND: opt-in only (no autoplay) */
