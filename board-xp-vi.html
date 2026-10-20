@@ -632,6 +632,25 @@
     #reg{display:none;position:fixed;inset:0;z-index:100010;background:rgba(0,0,0,.25);align-items:center;justify-content:center}
     #reg.on{display:flex}
     .reg-b{display:grid;gap:8px;padding:16px;background:#fff}
+    /* ===== v13: minesweeper game menu + custom field ===== */
+    .mswin{max-width:96vw}
+    .ms-body{max-width:96vw;max-height:72vh;overflow:auto}
+    .ms-menu{position:relative;display:flex;margin:0 -3px;padding:2px 4px;background:#ece9d8;border-bottom:1px solid #fff;font:12px Tahoma,sans-serif}
+    .ms-menu>button{border:0;background:none;font:inherit;padding:2px 8px;cursor:pointer}
+    .ms-menu>button:hover,.ms-menu>button[aria-expanded=true]{background:#316ac5;color:#fff}
+    .ms-dd{position:absolute;left:4px;top:100%;min-width:190px;z-index:5;padding:2px;background:#fff;border:1px solid #aca899;box-shadow:2px 3px 4px rgba(0,0,0,.3)}
+    .ms-dd[hidden]{display:none}
+    .ms-dd button{display:flex;gap:6px;width:100%;padding:3px 12px 3px 4px;border:0;background:none;color:#000;text-align:left;font:12px Tahoma,sans-serif;cursor:pointer}
+    .ms-dd button:hover,.ms-dd button:focus-visible{background:#316ac5;color:#fff;outline:0}
+    .ms-dd .ck{width:12px;visibility:hidden}
+    .ms-dd .on .ck{visibility:visible}
+    .ms-dd hr{border:0;border-top:1px solid #ccc;margin:2px 4px}
+    #ms-cf{position:fixed;inset:0;z-index:100005;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25)}
+    #ms-cf[hidden]{display:none}
+    .cf-b{display:grid;grid-template-columns:auto 80px auto;gap:8px 10px;align-items:center;padding:16px;background:#fff;font:12px Tahoma,sans-serif}
+    .cf-b input{font:inherit;padding:3px 4px;border:1px solid #7f9db9;border-radius:0;box-shadow:inset 1px 1px 2px rgba(0,0,0,.15)}
+    .cf-b small{color:#666}
+    .cf-err{grid-column:1/-1;min-height:1.2em;color:#d80000;font-weight:700}
   </style>
 </head>
 <body>
@@ -1311,10 +1330,34 @@
   <button id="ms-ico" class="dicon" type="button"><img src="sweeper.svg" alt="">Dò mìn</button>
   <div id="ms-win" class="mswin" hidden>
     <div class="ms-tb" id="ms-tb"><span><img class="ms-ti" src="sweeper.svg" alt=""> Dò mìn</span><button id="ms-x" type="button" aria-label="Đóng Dò mìn">×</button></div>
+    <div class="ms-menu">
+      <button id="ms-gm" type="button" aria-haspopup="true" aria-expanded="false">Trò chơi</button>
+      <div class="ms-dd" id="ms-dd" hidden>
+        <button type="button" data-lv="n"><span class="ck">✓</span>Ván mới</button>
+        <hr>
+        <button type="button" data-lv="b" class="on"><span class="ck">✓</span>Dễ (9×9, 10 mìn)</button>
+        <button type="button" data-lv="i"><span class="ck">✓</span>Trung bình (16×16, 40)</button>
+        <button type="button" data-lv="e"><span class="ck">✓</span>Khó (30×16, 99)</button>
+        <button type="button" data-lv="c"><span class="ck">✓</span>Tuỳ chỉnh…</button>
+      </div>
+    </div>
     <div class="ms-body">
       <div class="ms-top"><span class="lcd" id="ms-mines" aria-label="Số mìn còn lại">010</span><button id="ms-face" type="button" aria-label="Ván mới">🙂</button><span class="lcd" id="ms-time" aria-label="Giây">000</span></div>
       <div id="ms-grid"></div>
       <button class="btn" id="ms-flag" type="button">🚩 Chế độ cắm cờ: tắt</button>
+    </div>
+  </div>
+
+  <div id="ms-cf" role="dialog" aria-modal="true" aria-labelledby="ms-cft" hidden>
+    <div class="mb">
+      <div class="mt" id="ms-cft">Bàn chơi tuỳ chỉnh</div>
+      <div class="cf-b">
+        <label for="cf-h">Chiều cao:</label><input id="cf-h" type="number" min="9" max="24"><small>9–24</small>
+        <label for="cf-w">Chiều rộng:</label><input id="cf-w" type="number" min="9" max="30"><small>9–30</small>
+        <label for="cf-m">Số mìn:</label><input id="cf-m" type="number" min="10"><small id="cf-mh">10–64</small>
+        <div class="cf-err" id="cf-err" aria-live="polite"></div>
+      </div>
+      <div class="mr"><button class="btn" id="cf-ok" type="button">OK</button> <button class="btn" id="cf-no" type="button">Huỷ</button></div>
     </div>
   </div>
 
@@ -1339,7 +1382,7 @@
       noticeSnd = new Audio('notify.mp3'); noticeSnd.preload = 'auto';
       $('lg-wt').textContent = 'Chào mừng, ' + n;
       login.classList.add('wel');
-      setTimeout(() => { login.classList.add('out'); document.body.classList.remove('lock'); lockEls.forEach(e => { e.inert = false; }); if (innerWidth >= 1440) openMs(); setTimeout(showNotice, 5000); }, 2200);
+      setTimeout(() => { login.classList.add('out'); document.body.classList.remove('lock'); lockEls.forEach(e => { e.inert = false; }); if (innerWidth >= 1440) openMs(); setTimeout(showNotice, 10000); }, 2200);
       setTimeout(() => login.remove(), 2800);
     };
     $('lg-go').onclick = signIn;
@@ -1348,12 +1391,15 @@
     $('lg-user').focus();
 
     /* random banner ads */
-    /* ===== EDIT ME: your ads. Put a link in href to make an ad clickable. ===== */
+    /* ===== EDIT ME: your ads =====
+       src = file ảnh, href = link mở trang web ('' = không có),
+       icon/text = nội dung popup, action = 'minesweeper' mở game Dò mìn */
     const ADS = [
-      { src: 'ad-1.png', href: '' },
-      { src: 'ad-2.png', href: '' }
+      { src: 'ad-1.png', href: '', icon: '📢', text: 'Bạn chẳng nhận được gì cả!\nKyon xin lỗi. Haruhi thì không.' },
+      { src: 'ad-2.png', href: '', icon: '🛸', text: 'Haruhi bảo bạn nên đi commission thay vì rước Rei về!' },
+      { src: 'ad-3.png', href: '', action: 'minesweeper' },
+      { src: 'ad-4.png', href: '', icon: '💢', text: 'Tập trung vào commission đi!!!\n- Haruhi' }
     ];
-    const AD_MSG = ['Bạn vừa bấm quảng cáo! Kyon bảo là bạn chẳng trúng được gì cả.', 'Chúc mừng! Bạn đã đăng ký 0 bản tin.', 'Quảng cáo này muốn bạn đi đặt tranh họa sĩ thì hơn.'];
     function mkAd(start) {
       const w = document.createElement('div'); w.className = 'ad-wrap';
       w.innerHTML = '<small class="ad-lbl">QUẢNG CÁO</small><div class="ad-slot" role="button" tabindex="0" aria-label="Quảng cáo"></div>';
@@ -1365,29 +1411,31 @@
         s.replaceChildren(img);
       };
       const noSnd = new Audio('no.mp3');
-	  const click = () => {
-	  // play "no" every time an ad box is pressed
-	  noSnd.currentTime = 0;
-	  noSnd.play().catch(() => {});
-	  const ad = ADS[cur];
-	  if (ad.href) window.open(ad.href, '_blank', 'noopener');
-	  else msg('Brigade Ads', '📢', AD_MSG[Math.floor(Math.random() * AD_MSG.length)]);
-	  };
-      const next = () => { if (ADS.length > 1) { let i; do { i = Math.floor(Math.random() * ADS.length); } while (i === cur); cur = i; } show(); };
+      const click = () => {
+        // play "no" every time an ad box is pressed
+        noSnd.currentTime = 0;
+        noSnd.play().catch(() => {});
+        const ad = ADS[cur];
+        if (ad.href) window.open(ad.href, '_blank', 'noopener');
+        else if (ad.action === 'minesweeper') openMs();
+        else msg('Brigade Ads', ad.icon || '📢', ad.text);
+      };
+      const next = () => { cur = (cur + 1) % ADS.length; show(); }; // both slots step together, so the two ads trade places and never match
       show(); s.onclick = click; s.onkeydown = e => { if (e.key === 'Enter') click(); };
-      if (!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(next, 8000 + Math.random() * 3000);
+      setInterval(next, 9000);
       return w;
     }
     document.querySelector('.addr').insertAdjacentElement('afterend', mkAd(0));
-    document.querySelector('.footer-msg').insertAdjacentElement('afterend', mkAd(1));
+    document.querySelector('.footer-msg').insertAdjacentElement('afterend', mkAd(2));
 
-    /* minesweeper (9x9, 10 mines) */
+    /* dò mìn (dễ / trung bình / khó / tuỳ chỉnh) */
     (() => {
-      const W = 9, H = 9, M = 10, el = $('ms-grid'), face = $('ms-face'), win = $('ms-win');
+      let W = 9, H = 9, M = 10;
+      const el = $('ms-grid'), face = $('ms-face'), win = $('ms-win');
       let g, over, won, started, t, timer, flags, flagMode = false;
       const pad = n => String(Math.max(0, Math.min(999, n))).padStart(3, '0');
       const nb = i => { const x = i % W, y = (i / W) | 0, a = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const X = x + dx, Y = y + dy; if ((dx || dy) && X >= 0 && X < W && Y >= 0 && Y < H) a.push(Y * W + X); } return a; };
-      function init() { clearInterval(timer); g = Array.from({ length: W * H }, () => ({ m: 0, r: 0, f: 0, n: 0 })); over = won = started = false; t = 0; flags = 0; paint(); }
+      function init() { clearInterval(timer); el.style.gridTemplateColumns = `repeat(${W},22px)`; g = Array.from({ length: W * H }, () => ({ m: 0, r: 0, f: 0, n: 0 })); over = won = started = false; t = 0; flags = 0; paint(); }
       function paint() {
         const fi = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.i : null;
         el.innerHTML = g.map((c, i) => {
@@ -1437,7 +1485,50 @@
       });
       sm.querySelector('hr').insertAdjacentHTML('beforebegin', '<button type="button" id="msb"><img class="ms-ti" src="sweeper.svg" alt=""> Dò mìn</button>');
       $('msb').onclick = () => { sm.classList.remove('on'); openMs(); };
-      init();
+
+      /* menu trò chơi + bàn chơi tuỳ chỉnh */
+      const LV = { b: [9, 9, 10], i: [16, 16, 40], e: [30, 16, 99] };
+      const dd = $('ms-dd'), gm = $('ms-gm'), cf = $('ms-cf');
+      const closeDd = () => { dd.hidden = true; gm.setAttribute('aria-expanded', 'false'); };
+      function setField(w, h, m, key) {
+        W = w; H = h; M = m;
+        try { localStorage.setItem('sos_ms', JSON.stringify([w, h, m, key])); } catch (e) {}
+        dd.querySelectorAll('[data-lv]').forEach(b => b.classList.toggle('on', b.dataset.lv === key));
+        init();
+        if (innerWidth < 1440) win.style.left = Math.max(8, (innerWidth - win.offsetWidth) / 2) + 'px';
+      }
+      gm.onclick = e => { e.stopPropagation(); dd.hidden = !dd.hidden; gm.setAttribute('aria-expanded', String(!dd.hidden)); };
+      document.addEventListener('click', e => { if (!dd.contains(e.target)) closeDd(); });
+      dd.addEventListener('click', e => {
+        const b = e.target.closest('[data-lv]'); if (!b) return;
+        closeDd(); const k = b.dataset.lv;
+        if (k === 'n') init();
+        else if (k === 'c') openCf();
+        else setField(...LV[k], k);
+      });
+      const maxMines = (w, h) => (w - 1) * (h - 1);
+      function openCf() {
+        $('cf-h').value = H; $('cf-w').value = W; $('cf-m').value = M; $('cf-err').textContent = '';
+        $('cf-mh').textContent = '10–' + maxMines(W, H);
+        cf.hidden = false; $('cf-h').focus(); $('cf-h').select();
+      }
+      const okCf = () => {
+        const h = +$('cf-h').value, w = +$('cf-w').value, m = +$('cf-m').value, err = $('cf-err');
+        if (!(Number.isInteger(h) && h >= 9 && h <= 24)) return err.textContent = 'Chiều cao phải từ 9 đến 24.';
+        if (!(Number.isInteger(w) && w >= 9 && w <= 30)) return err.textContent = 'Chiều rộng phải từ 9 đến 30.';
+        const mx = maxMines(w, h);
+        if (!(Number.isInteger(m) && m >= 10 && m <= mx)) return err.textContent = 'Số mìn phải từ 10 đến ' + mx + ' với kích thước này.';
+        cf.hidden = true; setField(w, h, m, 'c');
+      };
+      $('cf-ok').onclick = okCf; $('cf-no').onclick = () => { cf.hidden = true; };
+      cf.addEventListener('keydown', e => { if (e.key === 'Enter') okCf(); if (e.key === 'Escape') cf.hidden = true; });
+      ['cf-h', 'cf-w'].forEach(id => $(id).addEventListener('input', () => { $('cf-mh').textContent = '10–' + maxMines(+$('cf-w').value || 9, +$('cf-h').value || 9); }));
+
+      /* khôi phục bàn chơi lần trước */
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem('sos_ms')); } catch (e) {}
+      if (saved && saved[0] >= 9 && saved[0] <= 30 && saved[1] >= 9 && saved[1] <= 24 && saved[2] >= 10 && saved[2] <= maxMines(saved[0], saved[1])) setField(saved[0], saved[1], saved[2], saved[3]);
+      else init();
     })();
   </script>
 
