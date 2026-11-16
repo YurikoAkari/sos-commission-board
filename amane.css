@@ -1,0 +1,290 @@
+/* =====================================================================
+   AMANE — companion styles for the S.O.S. Brigade Commission Board
+   Works with amane.js. Nothing here touches existing board styles
+   except the temporary highlight on the language button (.amane-point).
+
+   Tweak the look from the variables below:
+     --am        sprite size (her canvas is square; art of any resolution is
+                 scaled to this many CSS pixels)
+     --am-bottom distance from the bottom of the screen (sits above the
+                 "Commission me" button)
+   ===================================================================== */
+
+:root { --am: 144px; --am-bottom: 102px; }
+@media (max-width: 640px) { :root { --am: 120px; --am-bottom: 98px; } }
+
+.amane {
+  --am-ink: var(--ink, #1b1230);
+  --am-pink: var(--pink, #ff5fa2);
+  --am-cyan: var(--cyan, #38d6ff);
+  position: fixed;
+  right: 14px;
+  bottom: var(--am-bottom);
+  z-index: 880;               /* below the fab (900) and the taskbar (950) */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;       /* only her own controls catch the mouse */
+  font-family: Verdana, Tahoma, 'Trebuchet MS', sans-serif;
+}
+.amane[hidden] { display: none; }
+body.lock .amane { display: none; }
+
+@media (max-width: 640px) { .amane { right: 8px; } }
+
+/* ---------- stage: cloud + sprite + mute button ---------- */
+.amane-stage {
+  position: relative;
+  width: calc(var(--am) * 1.25);
+  height: calc(var(--am) * 1.3);
+}
+
+/* Cloud: a separate layer. If assets/companion/amane_cloud.png exists
+   amane.js adds .has-art and uses it; otherwise this CSS cloud is shown. */
+.amane-cloud {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(var(--am) * 1.2);
+  height: calc(var(--am) * .42);
+  transform: translateX(-50%);
+  background: #fff;
+  border: 3px solid var(--am-ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--am-pink);
+}
+.amane-cloud::before,
+.amane-cloud::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border: 3px solid var(--am-ink);
+  border-bottom-color: transparent;
+  border-radius: 999px 999px 0 0;
+}
+.amane-cloud::before { left: 14%; top: -45%; width: 38%; height: 70%; }
+.amane-cloud::after  { right: 12%; top: -30%; width: 30%; height: 55%; }
+.amane-cloud.has-art {
+  background: center / 100% 100% no-repeat;
+  border: 0; box-shadow: none; border-radius: 0;
+  image-rendering: pixelated;
+}
+/* Cloud art present: it shares her canvas, so stack both layers on the exact same box. */
+.amane.cloud-art .amane-stage { height: var(--am); }
+.amane.cloud-art .amane-actor { bottom: 0; }
+.amane.cloud-art .amane-cloud { bottom: 0; width: var(--am); height: var(--am); }
+.amane-cloud.has-art::before,
+.amane-cloud.has-art::after { display: none; }
+
+/* ---------- the sprite (a real <button>, so keyboard works) ---------- */
+.amane-actor {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--am) * .2);
+  width: var(--am);
+  height: var(--am);
+  margin-left: calc(var(--am) / -2);
+}
+.amane-actor.flip .amane-sprite { transform: scaleX(-1); }
+
+.amane-sprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.amane-sprite:focus-visible { outline: 3px solid var(--am-cyan); outline-offset: 3px; border-radius: 12px; }
+.amane-sprite img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.amane-sprite img[hidden], .amane-ph[hidden] { display: none; }
+
+/* Placeholder shown for any animation whose PNGs are not in
+   assets/companion/ yet. Dashed outline = "art not drawn yet". */
+.amane-ph {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: calc(var(--am) * .46);
+  line-height: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #ffd6ec 70%);
+  border: 3px dashed var(--am-ink);
+  box-sizing: border-box;
+}
+.amane[data-sleeping="true"] .amane-ph { filter: saturate(.6) brightness(.95); }
+.amane-ph.alt { transform: translateY(-3px); }
+.amane-ph[data-lean="l"] { transform: rotate(-9deg) translateX(-3px); }
+.amane-ph[data-lean="r"] { transform: rotate(9deg) translateX(3px); }
+
+/* ---------- mute (silence) button ---------- */
+.amane-mute {
+  position: absolute;
+  left: -4px;
+  bottom: -2px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--am-ink);
+  background: #f4f4f4;
+  border: 2px solid var(--am-ink);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--am-ink);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.amane-mute:hover { background: #fff; }
+.amane-mute:active { transform: translate(2px, 2px); box-shadow: none; }
+.amane-mute:focus-visible { outline: 3px solid var(--am-cyan); outline-offset: 2px; }
+/* pressed = silenced: inverted button AND a different icon (🔕), so it never relies on colour alone */
+.amane-mute[aria-pressed="true"] {
+  background: var(--am-ink);
+  color: #fff;
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,.25);
+}
+
+/* ---------- speech bubble: Windows XP balloon, no outline ---------- */
+.amane-bubble {
+  position: relative;
+  box-sizing: border-box;
+  max-width: min(260px, calc(100vw - 28px));
+  min-width: 70px;
+  padding: 10px 26px 10px 12px;
+  font-size: .8rem;
+  line-height: 1.4;
+  color: #000;
+  background: #ffffe1;
+  border: 0;
+  border-radius: 8px;
+  filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, .35));   /* shadows the little tail too */
+  overflow-wrap: anywhere;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .15s, transform .15s, visibility 0s .15s;
+}
+.amane-bubble.open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity .15s, transform .15s;
+}
+.amane-bubble::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--am) * .4);
+  bottom: -7px;
+  width: 14px;
+  height: 14px;
+  background: #ffffe1;
+  transform: rotate(45deg);
+  border-radius: 0 0 3px 0;
+}
+.amane-bubble a,
+.amane-bubble .amane-act {
+  color: #0a3fc8;
+  font: inherit;
+  font-weight: bold;
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.amane-bubble a:hover,
+.amane-bubble .amane-act:hover { color: #c2005a; }
+.amane-bubble a:focus-visible,
+.amane-bubble .amane-act:focus-visible,
+.amane-x:focus-visible { outline: 2px solid #316ac5; outline-offset: 1px; border-radius: 2px; }
+.amane-hint { display: block; margin-top: 3px; }
+.amane-x {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  font: bold 13px/16px Tahoma, Verdana, sans-serif;
+  color: #444;
+  background: none;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.amane-x:hover { background: rgba(0, 0, 0, .1); color: #000; }
+
+/* Animal-Crossing-style letter pop. The letters keep their space while
+   hidden, so the balloon never resizes while she "talks". */
+.amane-w { display: inline-block; white-space: nowrap; }
+.amane-ch { display: inline-block; opacity: 0; }
+.amane-ch.in { opacity: 1; animation: amane-pop .22s ease-out; }
+@keyframes amane-pop {
+  0%   { transform: translateY(4px) scale(.5); opacity: 0; }
+  60%  { transform: translateY(-2px) scale(1.2); opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+
+/* text for screen readers only */
+.amane-sr {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- sparkles for the victory dance ---------- */
+.amane-spark {
+  position: absolute;
+  font-size: 16px;
+  color: #ffcf2e;
+  text-shadow: 0 0 2px #fff, 1px 1px 0 var(--am-ink);
+  pointer-events: none;
+  animation: amane-spark 1.2s ease-out forwards;
+}
+@keyframes amane-spark {
+  0%   { opacity: 0; transform: scale(.3) translateY(6px); }
+  30%  { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.2) translateY(-16px); }
+}
+
+/* ---------- the board's own "HQ notice" balloon ----------
+   It used to sit at bottom:96px, exactly where Amane lives and on top of her
+   buttons. Lift it above her, leaving room underneath for her speech bubble.
+   Only its position changes; the balloon itself is untouched. */
+body .vgen-side-banner { bottom: calc(var(--am-bottom) + var(--am) * 1.3 + 120px); }
+
+/* ---------- pointing at the language button ---------- */
+.amane-point {
+  outline: 3px dashed #ff0055 !important;
+  outline-offset: 2px;
+  animation: amane-point .7s ease-in-out infinite alternate;
+}
+@keyframes amane-point { to { outline-offset: 5px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .amane-bubble, .amane-bubble.open { transition: none; transform: none; }
+  .amane-spark, .amane-point, .amane-ch.in { animation: none; }
+}
+@media print { .amane { display: none; } }
